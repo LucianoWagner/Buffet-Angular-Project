@@ -8,13 +8,14 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanActivate {
     constructor(private authService: AuthService, private router: Router) {}
 
-    canActivate(): boolean | UrlTree {
+    canActivate(): boolean {
         if (this.authService.isLoggedIn()) {
             // Si el usuario está autenticado, permitir el acceso
             return true;
-        } else {
-            // Si no está autenticado, redirigir al login
-            return this.router.parseUrl('/login');
         }
+
+        this.router.navigate(['/login']);
+        return false;
+
     }
 }

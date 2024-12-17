@@ -12,7 +12,9 @@ import {
 } from '@taiga-ui/core';
 import {TuiFieldErrorPipe, TuiSegmented, TuiSwitch, TuiTooltip} from '@taiga-ui/kit';
 import {TuiCardLarge, TuiForm, TuiHeader} from '@taiga-ui/layout';
- 
+import {AuthService} from '../../core/auth/auth.service';
+import {Router} from '@angular/router';
+
 @Component({
     standalone: true,
     selector: 'app-login',
@@ -40,9 +42,20 @@ import {TuiCardLarge, TuiForm, TuiHeader} from '@taiga-ui/layout';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LoginComponent {
+    email: string = '';
+    password: string = '';
+
+    constructor(private authService: AuthService, private router: Router) {}
+
+
+    onSubmit(): void {
+      this.authService.login(this.)
+    }
     protected readonly form = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', Validators.required),
     });
+
+
 }
 

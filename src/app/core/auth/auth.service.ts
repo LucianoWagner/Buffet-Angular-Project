@@ -1,19 +1,57 @@
 import { Injectable } from '@angular/core';
+import {enviorment} from '../../../enviorments/enviorments';
+import {HttpClient} from '@angular/common/http';
+import {CookieOptions, CookieService} from 'ngx-cookie-service';
+import {catchError, Observable, tap} from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
-    constructor() {}
+  private apiUrl = enviorment.apiUrl;
+    constructor(private http:HttpClient, private cookieService: CookieService) {}
 
-    // Método para verificar si el usuario está autenticado
-    isLoggedIn(): boolean {
-        return !!localStorage.getItem('token'); // Devuelve true si hay un token
+    login(email: string, password: string): Observable<any> {
+      return this.http.post<{access_token: string, refresh_token: string}>(
+        `${this.apiUrl}/auth/login`,
+        {email, password}
+      )
+        .pipe(
+          tap((tokens) => {
+            this.storeTokens(tokens.access_token, tokens.refresh_token);
+          }),
+          catchError((error) => {
+            console.error(error);
+            return error;
+          })
+        );
     }
 
-    // Método para cerrar sesión
     logout(): void {
-        localStorage.removeItem('token');
-        localStorage.removeItem('refresh_token');
+      this.cookieService.delete('access_token');
+      this.cookieService.delete('refresh_token');
+    }
+
+    getAccessToken(): string {
+      return this.cookieService.get('access_token');
+    }
+
+    getRefreshToken(): string {
+      return this.cookieService.get('refresh_token');
+    }
+
+    isLoggedIn(): boolean {
+      return !!this.getAccessToken();
+    }
+
+
+    private storeTokens(accessToken: string, refreshToken: string):void {
+      const cookieOptions: CookieOptions = {
+        path: "/",
+        sameSite: "Strict",
+        secure: true,
+      }
+      this.cookieService.set('access_token', accessToken, cookieOptions);
+      this.cookieService.set('refresh_token', refreshToken, cookieOptions);
     }
 }
