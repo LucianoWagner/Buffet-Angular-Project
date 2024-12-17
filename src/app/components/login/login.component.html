@@ -1,0 +1,59 @@
+<div class="form-container">
+    <form
+        tuiAppearance="floating"
+        tuiCardLarge
+        tuiForm="m"
+        [formGroup]="form"
+        class="centered-form"
+    >
+        <header tuiHeader>
+            <h2 tuiTitle>
+                Iniciar sesión
+            </h2>
+        </header>
+        <tui-textfield>
+            <label tuiLabel>DNI</label>
+            <input
+                formControlName="dni"
+                placeholder="Ingrese su DNI"
+                tuiTextfield
+                required
+            />
+        </tui-textfield>
+        <tui-error
+            formControlName="dni"
+            [error]="[] | tuiFieldError | async"
+        ></tui-error>
+        
+        <tui-textfield>
+            <label tuiLabel>Contraseña</label>
+            <input
+                formControlName="password"
+                placeholder="Ingrese su contraseña"
+                tuiTextfield
+                type="password"
+                required
+            />
+        </tui-textfield>
+        <tui-error
+            formControlName="password"
+            [error]="[] | tuiFieldError | async"
+        ></tui-error>
+        
+        <footer>
+            <button
+                appearance="secondary"
+                tuiButton
+                type="button"
+            >
+                Cancel
+            </button>
+            <button
+                tuiButton
+                type="submit"
+            >
+                Submit
+            </button>
+        </footer>
+    </form>
+</div>
