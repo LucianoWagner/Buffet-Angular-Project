@@ -12,17 +12,18 @@
             </h2>
         </header>
         <tui-textfield>
-            <label tuiLabel>DNI</label>
+            <label tuiLabel>Correo electrónico</label>
             <input
-                formControlName="dni"
-                placeholder="Ingrese su DNI"
+                formControlName="email"
+                placeholder="Ingrese su correo electrónico"
                 tuiTextfield
+                type="email"
                 required
             />
         </tui-textfield>
         <tui-error
-            formControlName="dni"
-            [error]="[] | tuiFieldError | async"
+            formControlName="email"
+            [error]="['required', 'email'] | tuiFieldError | async"
         ></tui-error>
         
         <tui-textfield>
@@ -37,7 +38,7 @@
         </tui-textfield>
         <tui-error
             formControlName="password"
-            [error]="[] | tuiFieldError | async"
+            [error]="['required'] | tuiFieldError | async"
         ></tui-error>
         
         <footer>
