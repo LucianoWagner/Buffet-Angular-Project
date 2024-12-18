@@ -4,6 +4,7 @@
         tuiCardLarge
         tuiForm="m"
         [formGroup]="form"
+        (ngSubmit)="onSubmit()"
         class="centered-form"
     >
         <header tuiHeader>
@@ -25,7 +26,7 @@
             formControlName="email"
             [error]="['required', 'email'] | tuiFieldError | async"
         ></tui-error>
-        
+
         <tui-textfield>
             <label tuiLabel>Contraseña</label>
             <input
@@ -40,7 +41,7 @@
             formControlName="password"
             [error]="['required'] | tuiFieldError | async"
         ></tui-error>
-        
+
         <footer>
             <button
                 appearance="secondary"
