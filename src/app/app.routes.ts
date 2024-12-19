@@ -10,12 +10,12 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent ,
+    canActivate: [AuthGuard], // Protege a este componente y a sus hijos
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home',
         component: HomeComponent,
-        canActivate: [AuthGuard], // Protege la ruta home
       },
 
     ],
