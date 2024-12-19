@@ -2,9 +2,9 @@ import { Routes } from '@angular/router';
 import { provideRouter } from '@angular/router';
 
 import { HomeComponent } from './components/home/home.component';
-import  LoginComponent  from './components/login/login.component';
-import { AppComponent } from './app.component';
 import {LayoutComponent} from './components/layout/layout.component';
+import LoginComponent from './components/login/login.component';
+import { AuthGuard } from './core/auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -12,12 +12,17 @@ export const routes: Routes = [
     component: LayoutComponent ,
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent },
+      {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AuthGuard], // Protege la ruta home
+      },
 
     ],
   },
-  {path: 'login', component: LoginComponent},
-  { path: '**', redirectTo: '' }, // Redirige cualquier ruta a 404
+    { path: 'login', component: LoginComponent },
+    { path: '**', redirectTo: 'login' }, // Redirect any unknown paths to 'login'
+    { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirige a login por defecto
 ];
 
 export const routerProviders = provideRouter(routes);
