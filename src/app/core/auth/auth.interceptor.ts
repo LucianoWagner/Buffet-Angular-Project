@@ -16,7 +16,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     const accessToken = this.authService.getAccessToken();
+
+
     let clonedRequest = req;
+
+
     if (accessToken) {
       clonedRequest = req.clone({
         setHeaders: {
@@ -26,17 +30,24 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     return next.handle(clonedRequest).pipe(
       catchError((error) => {
+
         if (error.status === 401) {
+
           return this.authService.refreshToken().pipe(
-            switchMap((newToken) => {
+            switchMap((newTokens) => {
+              console.log(newTokens)
+
+
+              // @ts-ignore
               const newRequest = clonedRequest.clone({
                 setHeaders: {
-                  Authorization: `Bearer ${newToken}`,
+                  Authorization: `Bearer ${newTokens.access_token}`,
                 },
               });
               return next.handle(newRequest);
             }),
             catchError((error) => {
+              console.log("ENTRE AL ERRORRRRRRRRRRR")
               this.authService.logout();
               return error;
             }),

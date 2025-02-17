@@ -1,22 +1,23 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Menu, MenuService } from '../../core/menu/menu.service';
+import {MenuService } from '../../core/menu/menu.service';
 import { MenuTableComponent } from './menu-table/menu-table.component';
-import { MenuTableHeaderComponent } from './menu-table-header/menu-table-header.component';
+
 import { NgIf } from '@angular/common';
+import {Menu} from '../../models/menu.model'
 
 @Component({
   selector: 'app-menu',
-  imports: [MenuTableComponent, MenuTableHeaderComponent, NgIf],
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css',
+  styleUrls: ['./menu.component.css'],
+  imports: [MenuTableComponent, NgIf],
+  standalone: true
 })
+
+
 export class MenuComponent implements OnInit {
   menus: Menu[] = [];
-  constructor(
-    private menuService: MenuService,
-    private changeDetectorRef: ChangeDetectorRef,
-  ) {}
-
+  isLoading = true;
+  errorMessage = '';
   columns = [
     {
       id: 'name',
@@ -60,16 +61,23 @@ export class MenuComponent implements OnInit {
     },
   ];
 
-  ngOnInit() {
-    this.menuService.getMenus().subscribe((menus: Menu[]) => {
-      this.menus = menus;
-      this.changeDetectorRef.detectChanges();
-    });
+  constructor(private menuService: MenuService) {}
+
+  ngOnInit(): void {
+    this.fetchMenus();
   }
 
-  fetchItems(): void {
-    this.menuService.getMenus().subscribe((menus: Menu[]) => {
-      this.menus = menus;
+  fetchMenus(): void {
+    this.menuService.getAllMenus().subscribe({
+      next: (menus) => {
+        this.menus = menus;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.errorMessage = error.message;
+        this.isLoading = false;
+      }
     });
   }
 }
+

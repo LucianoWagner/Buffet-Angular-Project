@@ -27,7 +27,7 @@ import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
-  selector: 'app-login',
+  selector: 'app-register',
   imports: [
     AsyncPipe,
     NgIf,
@@ -50,21 +50,28 @@ import { Router } from '@angular/router';
     TuiLabel,
     TuiTextfieldComponent,
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class LoginComponent {
+export default class RegisterComponent {
   protected readonly form = new FormGroup({
+    dni: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    surname: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
+    confirmPassword: new FormControl('', Validators.required),
   });
+
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {}
-  email: string = '';
-  password: string = '';
+  ) {
+  }
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
@@ -74,19 +81,36 @@ export default class LoginComponent {
 
   onSubmit(): void {
     if (this.form.valid) {
-      const { email, password } = this.form.value;
-      this.authService.login(email!, password!).subscribe({
+      const {dni, name, surname, email, password, confirmPassword} = this.form.value;
+
+      if (!dni || !name || !surname || !email || !password || !confirmPassword) {
+        this.form.setErrors({backend: 'Todos los campos son obligatorios'});
+        return;
+      }
+
+      if (password.length < 6) {
+        this.form.get('password')?.setErrors({minlength: true});
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        this.form.get('confirmPassword')?.setErrors({mismatch: true});
+        return;
+      }
+
+      this.authService.register(dni, name, surname, email, password).subscribe({
         next: () => {
-          console.log('User logged in');
+          console.log('User registered');
           this.router.navigate(['/']);
         },
-
         error: (error) => {
-          console.error('Login error:', error);
-          if (error.error.status === 403){
-            this.form.setErrors({ backend: "Credenciales incorrectas. Intente de nuevo" })
+          console.error('Register error:', error);
+          if (error.error.code === 'EMAIL_YA_EXISTENTE') {
+            this.form.get('email')?.setErrors({backend: 'Este correo ya está en uso'});
+          } else if (error.error.code === 'DNI_YA_EXISTENTE') {
+            this.form.get('dni')?.setErrors({backend: 'Este DNI ya está registrado'});
           } else {
-            this.form.setErrors({ backend: "Se ha producido un error. Intente de nuevo" })
+            this.form.setErrors({backend: 'Se ha producido un error. Intente de nuevo'});
           }
         },
       });

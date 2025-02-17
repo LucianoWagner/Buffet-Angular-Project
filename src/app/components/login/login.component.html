@@ -42,6 +42,10 @@
             [error]="['required'] | tuiFieldError | async"
         ></tui-error>
 
+        <p *ngIf="form.errors?.['backend']">
+          {{form.errors?.['backend']}}
+        </p>
+
         <footer>
             <button
                 appearance="secondary"

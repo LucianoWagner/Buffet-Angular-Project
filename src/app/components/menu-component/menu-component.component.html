@@ -1,0 +1,73 @@
+<div class="container">
+  <header tuiHeader>
+    <h2 tuiTitle>Gestión de Componentes del Menú</h2>
+  </header>
+
+  <!-- Botón para abrir el modal de agregar -->
+  <button tuiButton type="button" (click)="openAddModal()">Agregar Componente</button>
+
+  <!-- Tabla de componentes -->
+  <tui-table-bar class="table-container">
+    <table>
+      <thead>
+      <tr>
+        <th tuiTh>Nombre</th>
+        <th tuiTh>Imagen</th>
+        <th tuiTh>Tipo</th>
+        <th tuiTh>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let component of menuComponents">
+        <td>{{ component.name }}</td>
+        <td>
+          <img *ngIf="component.imageUrl" [src]="component.imageUrl" alt="Imagen" class="image-preview">
+          <span *ngIf="!component.imageUrl">Sin imagen</span>
+        </td>
+        <td>{{ component.type }}</td>
+        <td>
+          <button tuiButton appearance="secondary" type="button" (click)="openEditModal(component)">Editar</button>
+          <button tuiButton appearance="error" type="button" (click)="deleteComponent(component.id)">Eliminar</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </tui-table-bar>
+
+  <!-- Modal de agregar/editar -->
+  <tui-dialog [(open)]="isModalOpen">
+    <form tuiForm="m" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <header tuiHeader>
+        <h2 tuiTitle>{{ isEditing ? 'Editar Componente' : 'Agregar Componente' }}</h2>
+      </header>
+
+      <tui-textfield>
+        <label tuiLabel>Nombre</label>
+        <input formControlName="name" placeholder="Ingrese el nombre" tuiTextfield required />
+      </tui-textfield>
+      <tui-error formControlName="name" [error]="['required'] | tuiFieldError | async"></tui-error>
+
+      <tui-textfield>
+        <label tuiLabel>URL de la Imagen</label>
+        <input formControlName="imageUrl" placeholder="Ingrese la URL" tuiTextfield />
+      </tui-textfield>
+
+      <tui-select formControlName="type">
+        <label tuiLabel>Tipo</label>
+        <tui-data-list>
+          <button *ngFor="let type of menuComponentTypes" tuiOption [value]="type">{{ type }}</button>
+        </tui-data-list>
+      </tui-select>
+      <tui-error formControlName="type" [error]="['required'] | tuiFieldError | async"></tui-error>
+
+      <p *ngIf="form.errors?.['backend']">
+        {{ form.errors?.['backend'] }}
+      </p>
+
+      <footer>
+        <button appearance="secondary" tuiButton type="button" (click)="closeModal()">Cancelar</button>
+        <button tuiButton type="submit">{{ isEditing ? 'Guardar' : 'Agregar' }}</button>
+      </footer>
+    </form>
+  </tui-dialog>
+</div>

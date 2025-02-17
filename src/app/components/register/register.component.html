@@ -1,0 +1,122 @@
+<div class="form-container">
+  <form
+    tuiAppearance="floating"
+    tuiCardLarge
+    tuiForm="m"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="centered-form"
+  >
+    <header tuiHeader>
+      <h2 tuiTitle>
+        Registro
+      </h2>
+    </header>
+
+    <tui-textfield>
+      <label tuiLabel>DNI</label>
+      <input
+        formControlName="dni"
+        placeholder="Ingrese su DNI"
+        tuiTextfield
+        type="text"
+        required
+      />
+    </tui-textfield>
+    <tui-error
+      formControlName="dni"
+      [error]="['required'] | tuiFieldError | async"
+    ></tui-error>
+
+    <tui-textfield>
+      <label tuiLabel>Nombre</label>
+      <input
+        formControlName="name"
+        placeholder="Ingrese su nombre"
+        tuiTextfield
+        type="text"
+        required
+      />
+    </tui-textfield>
+    <tui-error
+      formControlName="name"
+      [error]="['required'] | tuiFieldError | async"
+    ></tui-error>
+
+    <tui-textfield>
+      <label tuiLabel>Apellido</label>
+      <input
+        formControlName="surname"
+        placeholder="Ingrese su apellido"
+        tuiTextfield
+        type="text"
+        required
+      />
+    </tui-textfield>
+    <tui-error
+      formControlName="surname"
+      [error]="['required'] | tuiFieldError | async"
+    ></tui-error>
+
+    <tui-textfield>
+      <label tuiLabel>Correo electrónico</label>
+      <input
+        formControlName="email"
+        placeholder="Ingrese su correo electrónico"
+        tuiTextfield
+        type="email"
+        required
+      />
+    </tui-textfield>
+    <tui-error
+      formControlName="email"
+      [error]="['required', 'email'] | tuiFieldError | async"
+    ></tui-error>
+
+    <tui-textfield>
+      <label tuiLabel>Contraseña</label>
+      <input
+        formControlName="password"
+        placeholder="Ingrese su contraseña"
+        tuiTextfield
+        type="password"
+        required
+      />
+    </tui-textfield>
+    <tui-error
+      formControlName="password"
+      [error]="['required'] | tuiFieldError | async"
+    ></tui-error>
+
+    <tui-textfield>
+      <label tuiLabel>Contraseña</label>
+      <input
+        formControlName="confirm-password"
+        placeholder="Ingrese su contraseña nuevamente"
+        tuiTextfield
+        type="password"
+        required
+      />
+    </tui-textfield>
+    <tui-error
+      formControlName="password"
+      [error]="['required'] | tuiFieldError | async"
+    ></tui-error>
+
+    <footer>
+      <button
+        appearance="secondary"
+        tuiButton
+        type="button"
+      >
+        Cancelar
+      </button>
+      <button
+        tuiButton
+        type="submit"
+      >
+        Registrarse
+      </button>
+    </footer>
+  </form>
+</div>

@@ -5,16 +5,17 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { Menu } from '../../../core/menu/menu.service';
-import { NgForOf } from '@angular/common';
+import { Menu } from '../../../models/menu.model';
+import {CurrencyPipe, NgForOf} from '@angular/common';
 import { MenuComponent } from '../menu.component';
 
 @Component({
   selector: 'app-menu-table',
-  imports: [NgForOf],
+  imports: [NgForOf, CurrencyPipe],
   templateUrl: './menu-table.component.html',
   styleUrl: './menu-table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true
 })
 export class MenuTableComponent {
   @Input() menus: Menu[] = [];

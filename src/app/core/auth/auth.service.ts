@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { enviorment } from '../../../enviorments/enviorments';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { CookieOptions, CookieService } from 'ngx-cookie-service';
-import { catchError, Observable, tap } from 'rxjs';
+import {catchError, Observable, tap, throwError} from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from './jwt-payload.interface';
+import {Tokenresponse} from '../../models/tokenresponse';
 
 @Injectable({
   providedIn: 'root',
@@ -27,11 +28,25 @@ export class AuthService {
           this.storeTokens(tokens.access_token, tokens.refresh_token);
         }),
         catchError((error) => {
-          console.error(error);
-          return error;
+          return throwError(() => error);
         }),
       );
   }
+
+  register(dni: string, name: string, surname: string, email: string, password: string): Observable<any> {
+    return this.http
+      .post<{ message: string }>(`${this.apiUrl}/auth/register`, { dni, name, surname, email, password })
+      .pipe(
+        tap((response) => {
+          console.log('User registered successfully:', response.message);
+        }),
+        catchError((error) => {
+          console.error('Registration error:', error);
+          return throwError(() => new Error(error.message || 'Registration failed'));
+        })
+      );
+  }
+
 
   logout(): void {
     this.cookieService.delete('access_token');
@@ -50,21 +65,20 @@ export class AuthService {
     return !!this.getAccessToken();
   }
 
-  refreshToken(): Observable<unknown> {
+
+  refreshToken(): Observable<Tokenresponse> {
     return this.http
-      .post<{
-        access_token: string;
-        refresh_token: string;
-      }>(`${this.apiUrl}/auth/refresh`, {
+      .post<Tokenresponse>(`${this.apiUrl}/auth/refresh`, {
         refresh_token: this.getRefreshToken(),
-      })
+      }, )
       .pipe(
         tap((tokens) => {
           this.storeTokens(tokens.access_token, tokens.refresh_token);
         }),
         catchError((error) => {
+          console.log("ENTRE POR ACAA, FALEEEEEE")
           console.error(error);
-          return error;
+          return throwError(() => error);
         }),
       );
   }

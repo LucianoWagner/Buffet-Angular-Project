@@ -2,9 +2,12 @@ import { Routes } from '@angular/router';
 import { provideRouter } from '@angular/router';
 
 import { HomeComponent } from './components/home/home.component';
-import {LayoutComponent} from './components/layout/layout.component';
+
 import LoginComponent from './components/login/login.component';
 import { AuthGuard } from './core/auth/auth.guard';
+import {AppComponent} from './app.component';
+import {LayoutComponent} from './components/layout/layout.component';
+import {MenuComponent} from './components/menu/menu.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +20,14 @@ export const routes: Routes = [
         path: 'home',
         component: HomeComponent,
       },
+      {
+        path: 'menus',
+        component: MenuComponent
+      },
+      {
+        path: 'components',
+        component: HomeComponent
+      }
 
     ],
   },
