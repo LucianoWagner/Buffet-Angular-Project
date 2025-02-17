@@ -18,5 +18,6 @@ export const appConfig: ApplicationConfig = {
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
 
     NG_EVENT_PLUGINS,
-  ],
+        NG_EVENT_PLUGINS
+    ],
 };

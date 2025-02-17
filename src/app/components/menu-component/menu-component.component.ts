@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuComponentService } from '../../core/menu/menu-component.service';
 import { TuiDialogService, TuiNotification, TuiAlertService } from '@taiga-ui/core';
 import { Observable } from 'rxjs';
+import {initFlowbite} from 'flowbite';
 
 interface MenuComponent {
   id: number;
@@ -24,6 +25,7 @@ export class MenuComponentComponent implements OnInit {
   isEditing = false;
   selectedComponent: MenuComponent | null = null;
   menuComponentTypes = ['Entrada', 'Plato Principal', 'Postre', 'Bebida'];
+  activeDropdownId: number | null = null;
 
   constructor(
     private menuComponentService: MenuComponentService,
@@ -40,7 +42,10 @@ export class MenuComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMenuComponents();
+
   }
+
+
 
   // Cargar la lista de componentes del menú
   loadMenuComponents(): void {
