@@ -51,6 +51,12 @@ export class MenuTableComponent {
   itemsPerPage: number = 5;
   totalMenus: number = 0;
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['menus']) {
+      this.totalMenus = this.menus.length; // Actualiza el total cuando cambian los menús
+    }
+  }
+
   get paginatedMenus(): Menu[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     return this.menus.slice(startIndex, startIndex + this.itemsPerPage);
