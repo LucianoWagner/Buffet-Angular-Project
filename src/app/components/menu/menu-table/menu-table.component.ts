@@ -30,6 +30,32 @@ export class MenuTableComponent {
 
   activeDropdownId: number | null = null;
 
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  totalMenus: number = 0;
+
+
+
+  get paginatedMenus(): Menu[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.menus.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  nextPage(): void {
+    const totalPages = Math.ceil(this.totalMenus / this.itemsPerPage);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+
+
   private readonly editDialog = tuiDialog(MenuEditDialogComponent, {
     dismissible: true,
 
@@ -81,4 +107,5 @@ export class MenuTableComponent {
 
   protected readonly MenuComponent = MenuComponent;
   protected readonly findComponent = findComponent;
+  protected readonly Math = Math;
 }
