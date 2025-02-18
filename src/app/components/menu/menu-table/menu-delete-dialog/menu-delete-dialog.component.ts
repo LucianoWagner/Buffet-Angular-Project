@@ -65,7 +65,7 @@ export class MenuDeleteDialogComponent {
 
 
   confirmDelete(): void {
-    this.menuService.deleteMenu(this.menu.id!).subscribe({
+    this.menuService.deleteMenu(this.context.data.id!).subscribe({
       next: () => {
         this.context.completeWith(this.menu);  // Cierra el diálogo y pasa el menú eliminado
       },

@@ -1,10 +1,19 @@
-<!-- menu-delete-dialog.component.html -->
+<div class="modal-container">
+  <h1 class="title">
+    ¿Está seguro que quiere eliminar este menú?
+
+  </h1>
+  <p>El menu seleccionado sera eliminado permanentemente</p>
+  <footer>
+    <button tuiButton type="submit" (click)="confirmDelete()">
+      Eliminar
+
+    </button>
+  </footer>
+
+</div>
 
 
 
-  <h2>¿Está seguro que quiere eliminar este menú?</h2>
-  <p>El menú seleccionado será eliminado permanentemente.</p>
 
-  <button tuiButton (click)="confirmDelete()">Aceptar</button>
-  <button tuiButton >Cancelar</button>
 

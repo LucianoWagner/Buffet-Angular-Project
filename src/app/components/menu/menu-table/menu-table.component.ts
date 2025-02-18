@@ -13,6 +13,7 @@ import {ActionsDropdownComponent} from './actions-dropdown/actions-dropdown.comp
 import {MenuEditDialogComponent} from './menu-edit-dialog/menu-edit-dialog.component';
 import {findComponent} from '../../../utils/utils';
 import {MenuDeleteDialogComponent} from './menu-delete-dialog/menu-delete-dialog.component';
+import {MenuAddDialogComponent} from './menu-add-dialog/menu-add-dialog.component';
 
 @Component({
   selector: 'app-menu-table',
@@ -38,8 +39,14 @@ export class MenuTableComponent {
   });
   private readonly deleteDialog = tuiDialog(MenuDeleteDialogComponent, {
     dismissible: true,
-    label: 'Eliminar Menu',
+    closeable: true
   });
+
+  private readonly addDialog = tuiDialog(MenuAddDialogComponent, {
+    dismissible: true,
+    closeable: true
+  });
+
 
 
   protected toggleEditDialog(menu: Menu) {
@@ -60,7 +67,7 @@ export class MenuTableComponent {
   protected toggleDeleteDialog (menu: Menu){
     this.deleteDialog(menu).subscribe({
       next: (result) => {
-        console.log(result);
+        this.refreshMenus.emit();
       },
       complete: () => {
         console.log('dialog closed');
