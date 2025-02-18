@@ -37,7 +37,7 @@ export class AuthService {
           this.storeTokens(tokens.access_token, tokens.refresh_token);
         }),
         catchError((error) => {
-          console.log(error);
+          console.error(error);
           return throwError(() => new Error('Login failed'));
         }),
       );
