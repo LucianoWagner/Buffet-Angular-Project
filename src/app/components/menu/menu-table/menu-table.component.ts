@@ -1,15 +1,18 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, EventEmitter,
   Input,
-  OnChanges,
+  OnChanges, Output,
   SimpleChanges,
 } from '@angular/core';
 import { Menu } from '../../../models/menu.model';
 import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
 import { MenuComponent } from '../menu.component';
-import {TuiButton, TuiDropdownDirective} from '@taiga-ui/core';
+import {TuiButton, tuiDialog, TuiDropdownDirective} from '@taiga-ui/core';
 import {ActionsDropdownComponent} from './actions-dropdown/actions-dropdown.component';
+import {MenuEditDialogComponent} from './menu-edit-dialog/menu-edit-dialog.component';
+import {findComponent} from '../../../utils/utils';
+import {MenuDeleteDialogComponent} from './menu-delete-dialog/menu-delete-dialog.component';
 
 @Component({
   selector: 'app-menu-table',
@@ -22,18 +25,53 @@ import {ActionsDropdownComponent} from './actions-dropdown/actions-dropdown.comp
 export class MenuTableComponent {
   @Input() menus: Menu[] = [];
   @Input() columns: { id: string; label: string }[] = [];
+  @Output() refreshMenus = new EventEmitter<void>();
 
   activeDropdownId: number | null = null;
 
-  constructor() {}
+  private readonly editDialog = tuiDialog(MenuEditDialogComponent, {
+    dismissible: true,
 
-  toggleDropdown(id: number): void {
-    this.activeDropdownId = this.activeDropdownId === id ? null : id;
+
+    closeable: true,
+
+  });
+  private readonly deleteDialog = tuiDialog(MenuDeleteDialogComponent, {
+    dismissible: true,
+    label: 'Eliminar Menu',
+  });
+
+
+  protected toggleEditDialog(menu: Menu) {
+    console.log("ID DEL MENU" + menu.id);
+    this.editDialog(menu).subscribe({
+      next: (result) => {
+
+        this.refreshMenus.emit();
+      },
+      complete: () => {
+
+        console.log('Dialog closed');
+      }
+
+    })
   }
 
-  findComponent(menu: Menu, type: string) {
-    return menu.components.find((component) => component.type === type)?.name;
+  protected toggleDeleteDialog (menu: Menu){
+    this.deleteDialog(menu).subscribe({
+      next: (result) => {
+        console.log(result);
+      },
+      complete: () => {
+        console.log('dialog closed');
+      }
+    })
   }
+
+
+
+
 
   protected readonly MenuComponent = MenuComponent;
+  protected readonly findComponent = findComponent;
 }

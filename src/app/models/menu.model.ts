@@ -15,3 +15,18 @@ export interface MenuComponent {
   imageUrl?: string;
   type: string;
 }
+
+
+export interface MenuUpdate {
+  name: string;
+  isVegetarian: boolean;
+  date: string;
+  price: number;
+  stock: number;
+  starter?: number;
+  mainDish?: number;
+  dessert?: number;
+  drink?: number;
+
+
+}

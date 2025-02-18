@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="overflow-x-auto">
-        <table tuiTable >
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" >
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th *ngFor="let column of columns" scope="col" class="px-4 py-3">{{ column.label }}</th>
@@ -50,13 +50,13 @@
 
               />
             </td>
-            <td class="px-4 py-3">{{findComponent(menu, "STARTER")}}</td>
-            <td class="px-4 py-3">{{findComponent(menu, "MAIN_DISH")}}</td>
-            <td class="px-4 py-3">{{findComponent(menu, "DESSERT")}}</td>
-            <td class="px-4 py-3">{{findComponent(menu, "DRINK")}}</td>
+            <td class="px-4 py-3">{{findComponent(menu.components, "STARTER")?.name}}</td>
+            <td class="px-4 py-3">{{findComponent(menu.components, "MAIN_DISH")?.name}}</td>
+            <td class="px-4 py-3">{{findComponent(menu.components, "DESSERT")?.name}}</td>
+            <td class="px-4 py-3">{{findComponent(menu.components, "DRINK")?.name}}</td>
 
             <td class="px-4 py-3 ">
-              <app-actions-dropdown></app-actions-dropdown>
+              <app-actions-dropdown [toggleEditDialog]="toggleEditDialog.bind(this, menu)" [toggleDeleteDialog]="toggleDeleteDialog.bind(this,menu)"></app-actions-dropdown>
 
             </td>
           </tr>

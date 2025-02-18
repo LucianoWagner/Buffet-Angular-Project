@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { enviorment } from '../../../enviorments/enviorments';
-import {Menu} from '../../models/menu.model'
+import {Menu, MenuUpdate} from '../../models/menu.model'
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +39,7 @@ export class MenuService {
   /**
    * Actualiza un menú por su ID (requiere permiso `MENU_UPDATE`).
    */
-  updateMenu(id: number, menuData: Partial<Menu>): Observable<Menu> {
+  updateMenu(id: number, menuData: MenuUpdate): Observable<Menu> {
     return this.http.put<Menu>(`${this.apiUrl}/${id}`, menuData).pipe(
       catchError((error) => {
         console.error('Error al actualizar el menú:', error);
@@ -47,5 +47,11 @@ export class MenuService {
       })
     );
   }
+
+  deleteMenu(menuId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${menuId}`);
+  }
+
+
 }
 

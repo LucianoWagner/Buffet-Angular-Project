@@ -13,13 +13,37 @@
     [size]="size"
   >
     <button
-      *tuiLet="'French Fries' as item"
+
+
       tuiOption
       type="button"
-      (click)="selectOption(item)"
+      (click)="toggleEditDialog()"
+
+
+
     >
-      {{ item }}
+      Editar
+      <tui-icon icon="@tui.pencil" [style.height.rem]="1"/>
+
+
     </button>
+
+    <button
+
+
+      tuiOption
+      type="button"
+      (click)="toggleDeleteDialog()"
+
+
+
+    >
+      Eliminar
+      <tui-icon icon="@tui.pencil" [style.height.rem]="1"/>
+
+
+    </button>
+
 
   </tui-data-list>
 

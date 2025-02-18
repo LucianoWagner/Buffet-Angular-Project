@@ -1,7 +1,7 @@
 import {NgForOf} from '@angular/common';
 import {ChangeDetectionStrategy, Component, inject, Input, input} from '@angular/core';
 import {TuiLet} from '@taiga-ui/cdk';
-import type {TuiSizeL, TuiSizeS} from '@taiga-ui/core';
+import {TuiIcon, TuiSizeL, TuiSizeS} from '@taiga-ui/core';
 import {TuiButton, TuiDataList, TuiDialogService, TuiDropdown} from '@taiga-ui/core';
 import {TuiDataListDropdownManager} from '@taiga-ui/kit';
 
@@ -14,13 +14,15 @@ import {TuiDataListDropdownManager} from '@taiga-ui/kit';
     TuiDataListDropdownManager,
     TuiDropdown,
     TuiLet,
+    TuiIcon,
   ],
   templateUrl: './actions-dropdown.component.html',
   styleUrl: './actions-dropdown.component.css',
   standalone: true,
 })
 export class ActionsDropdownComponent {
-  @Input() componentId!: number;
+  @Input() toggleEditDialog! : () => void;
+  @Input() toggleDeleteDialog! : () => void;
 
   private readonly dialogs = inject(TuiDialogService);
 
