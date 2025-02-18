@@ -10,9 +10,12 @@ import {
   TuiAppearance,
   TuiButton,
   TuiError,
-  TuiIcon, TuiLabel,
+  TuiIcon,
+  TuiLabel,
   TuiNotification,
-  TuiTextfield, TuiTextfieldComponent, TuiTextfieldDirective,
+  TuiTextfield,
+  TuiTextfieldComponent,
+  TuiTextfieldDirective,
   TuiTitle,
 } from '@taiga-ui/core';
 import {
@@ -59,10 +62,12 @@ export default class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
   });
+
   constructor(
     private authService: AuthService,
     private router: Router,
   ) {}
+
   email: string = '';
   password: string = '';
 
@@ -82,12 +87,7 @@ export default class LoginComponent {
         },
 
         error: (error) => {
-          console.log(error);
-          if (error.error.status === 403){
-            this.form.setErrors({ backend: "Credenciales incorrectas. Intente de nuevo" })
-          } else {
-            this.form.setErrors({ backend: "Se ha producido un error. Intente de nuevo" })
-          }
+          console.log(error.message);
         },
       });
     }

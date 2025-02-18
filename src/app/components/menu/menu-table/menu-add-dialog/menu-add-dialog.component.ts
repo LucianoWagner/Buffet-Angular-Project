@@ -186,7 +186,8 @@ export class MenuAddDialogComponent implements OnInit {
         this.submit();
       },
       error: (error) => {
-        console.error('Error adding menu:', error);
+        console.error(error.message);
+
         this.submitError = new TuiValidationError(
           error.message ?? 'Se ha producido un error al añadir el menú',
         );

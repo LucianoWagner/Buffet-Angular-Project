@@ -1,19 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import {MenuService } from '../../core/menu/menu.service';
+import { MenuService } from '../../core/menu/menu.service';
 import { MenuTableComponent } from './menu-table/menu-table.component';
 
 import { NgIf } from '@angular/common';
-import {Menu} from '../../models/menu.model'
+import { Menu } from '../../models/menu.model';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   imports: [MenuTableComponent, NgIf],
-  standalone: true
+  standalone: true,
 })
-
-
 export class MenuComponent implements OnInit {
   menus: Menu[] = [];
   isLoading = true;
@@ -72,12 +70,12 @@ export class MenuComponent implements OnInit {
       next: (menus) => {
         this.menus = menus;
         this.isLoading = false;
+        console.log('Cantidad de menus: ' + this.menus.length);
       },
       error: (error) => {
         this.errorMessage = error.message;
         this.isLoading = false;
-      }
+      },
     });
   }
 }
-

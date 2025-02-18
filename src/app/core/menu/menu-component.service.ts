@@ -25,11 +25,12 @@ export class MenuComponentService {
   addMenuComponent(component: MenuComponent): Observable<MenuComponent> {
     return this.http.post<MenuComponent>(this.apiUrl, component).pipe(
       catchError((error) => {
-        if (error.error.code === 'RECURSO_YA_EXISTENTE') {
-          return throwError(() => new Error('El componente ya existe'));
+        if (error.error) {
+          const message = error.error.message || 'Error al crear el componente';
+          return throwError(() => new Error(message));
         }
-        return throwError(() => new Error('Error al agregar el componente'));
-      })
+        return throwError(() => new Error('Error al crear el componente'));
+      }),
     );
   }
 
@@ -38,14 +39,19 @@ export class MenuComponentService {
    * @param id ID del componente a actualizar.
    * @param component Datos actualizados.
    */
-  updateMenuComponent(id: number, component: MenuComponent): Observable<MenuComponent> {
+  updateMenuComponent(
+    id: number,
+    component: MenuComponent,
+  ): Observable<MenuComponent> {
     return this.http.put<MenuComponent>(`${this.apiUrl}/${id}`, component).pipe(
       catchError((error) => {
         if (error.error.code === 'RECURSO_YA_EXISTENTE') {
-          return throwError(() => new Error('Ya existe un componente con ese nombre'));
+          return throwError(
+            () => new Error('Ya existe un componente con ese nombre'),
+          );
         }
         return throwError(() => new Error('Error al actualizar el componente'));
-      })
+      }),
     );
   }
 
@@ -54,9 +60,13 @@ export class MenuComponentService {
    * @param id ID del componente a eliminar.
    */
   deleteMenuComponent(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
-      catchError(() => throwError(() => new Error('Error al eliminar el componente')))
-    );
+    return this.http
+      .delete<void>(`${this.apiUrl}/${id}`)
+      .pipe(
+        catchError(() =>
+          throwError(() => new Error('Error al eliminar el componente')),
+        ),
+      );
   }
 
   /**
