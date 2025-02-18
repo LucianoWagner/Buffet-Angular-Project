@@ -3,9 +3,18 @@
     ¿Está seguro que quiere eliminar este menú?
 
   </h1>
-  <p>El menu seleccionado sera eliminado permanentemente</p>
+  <tui-notification
+    appearance="warning"
+    size="s"
+  >
+    <div
+      tuiTitle
+      [style.padding-inline-end.rem]="2"
+    >El menu seleccionado será eliminado permanentemente
+    </div>
+  </tui-notification>
   <footer>
-    <button tuiButton type="submit" (click)="confirmDelete()">
+    <button tuiButton type="submit" (click)="confirmDelete()" appearance="outline" tuiAppearanceMode="checked">
       Eliminar
 
     </button>

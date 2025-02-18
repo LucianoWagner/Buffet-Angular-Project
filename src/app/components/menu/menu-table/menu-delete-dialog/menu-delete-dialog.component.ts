@@ -1,5 +1,5 @@
 import {Component, inject, type TemplateRef} from '@angular/core';
-import {TuiButton, TuiDialogContext, TuiDialogService} from '@taiga-ui/core';
+import {TuiButton, TuiDialogContext, TuiDialogService, TuiNotification, TuiTitle} from '@taiga-ui/core';
 import {Menu} from '../../../../models/menu.model';
 import {MenuService} from '../../../../core/menu/menu.service';
 import { injectContext } from '@taiga-ui/polymorpheus';
@@ -12,7 +12,7 @@ import {TuiAlertService} from '@taiga-ui/core';
 
 @Component({
   selector: 'app-menu-delete-dialog',
-  imports:[TuiButton],
+  imports: [TuiButton, TuiNotification, TuiTitle],
   templateUrl: './menu-delete-dialog.component.html',
   styleUrls: ['./menu-delete-dialog.component.css'],
   standalone: true,
