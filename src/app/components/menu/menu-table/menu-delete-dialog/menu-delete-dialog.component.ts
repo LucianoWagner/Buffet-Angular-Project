@@ -23,27 +23,11 @@ export class MenuDeleteDialogComponent {
   // El menú a eliminar, lo recibimos por el contexto del diálogo.
   menu!: Menu;
   private readonly dialogs = inject(TuiResponsiveDialogService);
-  public readonly context = injectContext<TuiDialogContext<Menu, Menu>>();
+  public readonly context = injectContext<TuiDialogContext<Menu | null, Menu | null>>();
   protected value: Menu | null = null;
   private readonly alerts = inject(TuiAlertService);
 
-  protected onClick(): void {
-    const data: TuiConfirmData = {
-      content:
-        'This is <code>PolymorpheusContent</code> so it can be template too!',
-      yes: 'That is great!',
-      no: 'Who cares?',
-    };
 
-    this.dialogs
-      .open<boolean>(TUI_CONFIRM, {
-        label: 'Do you like Taiga UI?',
-        size: 's',
-        data,
-      })
-      .pipe(switchMap((response) => this.alerts.open(String(response))))
-      .subscribe();
-  }
 
   protected get hasValue(): boolean {
     return this.value !== null;
@@ -70,9 +54,13 @@ export class MenuDeleteDialogComponent {
         this.context.completeWith(this.menu);  // Cierra el diálogo y pasa el menú eliminado
       },
       error: (error) => {
-        console.error('Error al eliminar el menú:', error);
+        console.error('Error al eliminar el menú...:', error);
       }
     });
+  }
+
+  cancelDelete(): void {
+    this.context.completeWith(null);  // Cierra el diálogo
   }
 
 

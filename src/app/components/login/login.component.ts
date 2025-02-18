@@ -82,7 +82,7 @@ export default class LoginComponent {
         },
 
         error: (error) => {
-          console.error('Login error:', error);
+          console.log(error);
           if (error.error.status === 403){
             this.form.setErrors({ backend: "Credenciales incorrectas. Intente de nuevo" })
           } else {

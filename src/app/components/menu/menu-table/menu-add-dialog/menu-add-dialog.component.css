@@ -1,0 +1,15 @@
+.grid {
+  display: grid;
+  gap: inherit;
+  grid-template-columns: 1fr 1fr;
+}
+
+.stack {
+  display: flex;
+  gap: inherit;
+  flex-direction: column;
+}
+
+input[tuiSwitch]:checked {
+  color: #526ed3 !important;
+}

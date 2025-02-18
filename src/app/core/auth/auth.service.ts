@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { enviorment } from '../../../enviorments/enviorments';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { CookieOptions, CookieService } from 'ngx-cookie-service';
-import {catchError, Observable, tap, throwError} from 'rxjs';
+import { Observable, tap, throwError} from 'rxjs';
+import {catchError} from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from './jwt-payload.interface';
 import {Tokenresponse} from '../../models/tokenresponse';
@@ -28,6 +29,7 @@ export class AuthService {
           this.storeTokens(tokens.access_token, tokens.refresh_token);
         }),
         catchError((error) => {
+          console.error('Login error:', error);
           return throwError(() => error);
         }),
       );
@@ -74,12 +76,7 @@ export class AuthService {
       .pipe(
         tap((tokens) => {
           this.storeTokens(tokens.access_token, tokens.refresh_token);
-        }),
-        catchError((error) => {
-          console.log("ENTRE POR ACAA, FALEEEEEE")
-          console.error(error);
-          return throwError(() => error);
-        }),
+        })
       );
   }
 
@@ -101,4 +98,13 @@ export class AuthService {
     this.cookieService.set('access_token', accessToken, cookieOptions);
     this.cookieService.set('refresh_token', refreshToken, cookieOptions);
   }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 403){
+      console.log("UNAUTHORIZED");
+    }
+    return throwError(() => error);
+
+  }
 }
+

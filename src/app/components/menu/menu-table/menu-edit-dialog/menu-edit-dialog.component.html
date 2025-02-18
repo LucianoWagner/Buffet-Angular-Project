@@ -1,18 +1,20 @@
 <div class="modal-container">
   <h1 class="title">Editar Menu</h1>
   <form
-
     tuiForm="l"
     class="mb-16"
     [formGroup]="form"
     [style.max-width.rem]="32"
     (ngSubmit)="onSubmit()"
-
   >
-
     <tui-textfield>
       <label tuiLabel>Nombre</label>
-      <input formControlName="name" placeholder="Ingrese el nombre" tuiTextfield required />
+      <input
+        formControlName="name"
+        placeholder="Ingrese el nombre"
+        tuiTextfield
+        required
+      />
     </tui-textfield>
 
     <tui-input-date formControlName="date">
@@ -24,138 +26,144 @@
       <div class="stack">
         <tui-textfield>
           <label tuiLabel>Precio</label>
-          <input formControlName="price" tuiInputNumber [postfix]="' ' + 'ARS' | tuiCurrency" />
-
+          <input
+            formControlName="price"
+            tuiInputNumber
+            [postfix]="' ' + 'ARS' | tuiCurrency"
+          />
         </tui-textfield>
       </div>
 
       <div class="stack">
-        <tui-input-slider formControlName="stock"
-
-                          [max]="10000"
-                          [min]="0"
-                          [segments]="1" >
+        <tui-input-slider
+          formControlName="stock"
+          [max]="10000"
+          [min]="0"
+          [segments]="1"
+        >
           Stock
-
-
         </tui-input-slider>
-
       </div>
 
       <div class="stack">
-        <tui-select formControlName="starter" [tuiTextfieldCleaner]="true"  [valueContent]="startersList ? stringifyMenuComponents(startersList) : loading">
+        <tui-select
+          formControlName="starter"
+          [tuiTextfieldCleaner]="true"
+          [valueContent]="
+            startersList ? stringifyMenuComponents(startersList) : loading
+          "
+        >
           Entrada
           <ng-template tuiDataList>
             <tui-data-list *ngIf="startersList; else loading">
-              <button *ngFor="let starter of startersList" tuiOption [value]="starter.id">{{ starter.name }}</button>
+              <button
+                *ngFor="let starter of startersList"
+                tuiOption
+                [value]="starter.id"
+              >
+                {{ starter.name }}
+              </button>
             </tui-data-list>
-
           </ng-template>
           <ng-template #loading>
             <tui-loader class="tui-space_vertical-3 loader" />
           </ng-template>
-
         </tui-select>
-
       </div>
 
       <div class="stack">
-        <tui-select formControlName="main_dish" [tuiTextfieldCleaner]="true" [valueContent]="mainDishesList ? stringifyMenuComponents(mainDishesList) : loading">
+        <tui-select
+          formControlName="main_dish"
+          [tuiTextfieldCleaner]="true"
+          [valueContent]="
+            mainDishesList ? stringifyMenuComponents(mainDishesList) : loading
+          "
+        >
           Plato principal
           <ng-template tuiDataList>
             <tui-data-list *ngIf="mainDishesList; else loading">
-              <button *ngFor="let dish of mainDishesList" tuiOption [value]="dish.id">{{ dish.name }}</button>
+              <button
+                *ngFor="let dish of mainDishesList"
+                tuiOption
+                [value]="dish.id"
+              >
+                {{ dish.name }}
+              </button>
             </tui-data-list>
-
           </ng-template>
           <ng-template #loading>
             <tui-loader class="tui-space_vertical-3 loader" />
           </ng-template>
-
         </tui-select>
-
       </div>
 
       <div class="stack">
-        <tui-select formControlName="dessert" [tuiTextfieldCleaner]="true" [valueContent]="dessertsList ? stringifyMenuComponents(dessertsList) : loading">
+        <tui-select
+          formControlName="dessert"
+          [tuiTextfieldCleaner]="true"
+          [valueContent]="
+            dessertsList ? stringifyMenuComponents(dessertsList) : loading
+          "
+        >
           Postre
           <ng-template tuiDataList>
             <tui-data-list *ngIf="dessertsList; else loading">
-              <button *ngFor="let dessert of dessertsList" tuiOption [value]="dessert.id">{{ dessert.name }}</button>
+              <button
+                *ngFor="let dessert of dessertsList"
+                tuiOption
+                [value]="dessert.id"
+              >
+                {{ dessert.name }}
+              </button>
             </tui-data-list>
-
           </ng-template>
           <ng-template #loading>
             <tui-loader class="tui-space_vertical-3 loader" />
           </ng-template>
-
         </tui-select>
-
       </div>
 
       <div class="stack">
-
-        <tui-select formControlName="drink" [tuiTextfieldCleaner]="true"  [valueContent]="drinksList ? stringifyMenuComponents(drinksList) : loading">
+        <tui-select
+          formControlName="drink"
+          [tuiTextfieldCleaner]="true"
+          [valueContent]="
+            drinksList ? stringifyMenuComponents(drinksList) : loading
+          "
+        >
           Bebida
           <ng-template tuiDataList>
             <tui-data-list *ngIf="drinksList; else loading">
-              <button *ngFor="let drink of drinksList" tuiOption [value]="drink.id">{{ drink.name }}</button>
+              <button
+                *ngFor="let drink of drinksList"
+                tuiOption
+                [value]="drink.id"
+              >
+                {{ drink.name }}
+              </button>
             </tui-data-list>
-
           </ng-template>
           <ng-template #loading>
             <tui-loader class="tui-space_vertical-3 loader" />
           </ng-template>
-
         </tui-select>
-
-
       </div>
-      <div class="stack" >
+      <div class="stack">
         <label tuiLabel>
-          <input
-            formControlName="vegetarian"
-            tuiSwitch
-
-
-            type="checkbox"
-
-          />
+          <input formControlName="vegetarian" tuiSwitch type="checkbox" />
 
           Vegetariano
-
         </label>
-
-
       </div>
-
     </div>
 
-
-    <footer class="flex  justify-end">
-      <button
-        tuiButton
-        type="submit"
-      >
-        Enviar
-      </button>
-      <button
-        appearance="flat"
-        tuiButton
-        type="button"
-      >
+    <footer class="flex justify-end">
+      <button appearance="flat" tuiButton type="button" (click)="closeDialog()">
         Cancelar
       </button>
+      <button tuiButton type="submit" [loading]="isSubmitting$ | async">
+        Enviar
+      </button>
     </footer>
-
-
-
-
-
-
-
   </form>
-
-
-
 </div>

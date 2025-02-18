@@ -1,1 +1,202 @@
-<p>menu-add-dialog works!</p>
+<div class="modal-container">
+  <h1 class="title">Agregar Menu</h1>
+  <form
+    tuiForm="l"
+    class="mb-10"
+    [formGroup]="form"
+    [style.max-width.rem]="32"
+    (ngSubmit)="onSubmit()"
+  >
+    <tui-textfield>
+      <label tuiLabel>Nombre</label>
+      <input
+        formControlName="name"
+        placeholder="Ingrese el nombre"
+        tuiTextfield
+        required
+      />
+    </tui-textfield>
+    <tui-error formControlName="name" [error]="[] | tuiFieldError | async" />
+    <tui-input-date formControlName="date">
+      Fecha
+      <input tuiTextfieldLegacy />
+    </tui-input-date>
+    <tui-error formControlName="date" [error]="[] | tuiFieldError | async" />
+
+    <div class="grid">
+      <div class="stack">
+        <tui-textfield>
+          <label tuiLabel>Precio</label>
+          <input
+            formControlName="price"
+            tuiInputNumber
+            [postfix]="' ' + 'ARS' | tuiCurrency"
+          />
+        </tui-textfield>
+        <tui-error
+          formControlName="price"
+          [error]="[] | tuiFieldError | async"
+        />
+      </div>
+
+      <div class="stack">
+        <tui-input-slider
+          formControlName="stock"
+          [max]="10000"
+          [min]="0"
+          [segments]="1"
+        >
+          Stock
+        </tui-input-slider>
+        <tui-error
+          formControlName="stock"
+          [error]="[] | tuiFieldError | async"
+        />
+      </div>
+
+      <div class="stack">
+        <tui-select
+          formControlName="starter"
+          [tuiTextfieldCleaner]="true"
+          [valueContent]="
+            startersList ? stringifyMenuComponents(startersList) : loading
+          "
+        >
+          Entrada
+          <ng-template tuiDataList>
+            <tui-data-list *ngIf="startersList; else loading">
+              <button
+                *ngFor="let starter of startersList"
+                tuiOption
+                [value]="starter.id"
+              >
+                {{ starter.name }}
+              </button>
+            </tui-data-list>
+          </ng-template>
+          <ng-template #loading>
+            <tui-loader class="tui-space_vertical-3 loader" />
+          </ng-template>
+        </tui-select>
+        <tui-error
+          formControlName="starter"
+          [error]="[] | tuiFieldError | async"
+        />
+      </div>
+
+      <div class="stack">
+        <tui-select
+          formControlName="main_dish"
+          [tuiTextfieldCleaner]="true"
+          [valueContent]="
+            mainDishesList ? stringifyMenuComponents(mainDishesList) : loading
+          "
+        >
+          Plato principal
+          <ng-template tuiDataList>
+            <tui-data-list *ngIf="mainDishesList; else loading">
+              <button
+                *ngFor="let dish of mainDishesList"
+                tuiOption
+                [value]="dish.id"
+              >
+                {{ dish.name }}
+              </button>
+            </tui-data-list>
+          </ng-template>
+          <ng-template #loading>
+            <tui-loader class="tui-space_vertical-3 loader" />
+          </ng-template>
+        </tui-select>
+        <tui-error
+          formControlName="main_dish"
+          [error]="[] | tuiFieldError | async"
+        />
+      </div>
+
+      <div class="stack">
+        <tui-select
+          formControlName="dessert"
+          [tuiTextfieldCleaner]="true"
+          [valueContent]="
+            dessertsList ? stringifyMenuComponents(dessertsList) : loading
+          "
+        >
+          Postre
+          <ng-template tuiDataList>
+            <tui-data-list *ngIf="dessertsList; else loading">
+              <button
+                *ngFor="let dessert of dessertsList"
+                tuiOption
+                [value]="dessert.id"
+              >
+                {{ dessert.name }}
+              </button>
+            </tui-data-list>
+          </ng-template>
+          <ng-template #loading>
+            <tui-loader class="tui-space_vertical-3 loader" />
+          </ng-template>
+        </tui-select>
+        <tui-error
+          formControlName="dessert"
+          [error]="[] | tuiFieldError | async"
+        />
+      </div>
+
+      <div class="stack">
+        <tui-select
+          formControlName="drink"
+          [tuiTextfieldCleaner]="true"
+          [valueContent]="
+            drinksList ? stringifyMenuComponents(drinksList) : loading
+          "
+        >
+          Bebida
+          <ng-template tuiDataList>
+            <tui-data-list *ngIf="drinksList; else loading">
+              <button
+                *ngFor="let drink of drinksList"
+                tuiOption
+                [value]="drink.id"
+              >
+                {{ drink.name }}
+              </button>
+            </tui-data-list>
+          </ng-template>
+          <ng-template #loading>
+            <tui-loader class="tui-space_vertical-3 loader" />
+          </ng-template>
+        </tui-select>
+        <tui-error
+          formControlName="drink"
+          [error]="[] | tuiFieldError | async"
+        />
+      </div>
+
+      <div class="stack">
+        <label tuiLabel>
+          <input formControlName="vegetarian" tuiSwitch type="checkbox" />
+
+          Vegetariano
+        </label>
+      </div>
+    </div>
+
+    <tui-error [error]="submitError" class="text-lg mt-2" />
+
+    <footer class="flex justify-end mt-2">
+      <button tuiButton type="button" appearance="flat" (click)="closeDialog()">
+        Cancelar
+      </button>
+      <button
+        tuiButton
+        type="submit"
+        [disabled]="form.invalid"
+        [loading]="isSubmitting$ | async"
+      >
+        Guardar
+      </button>
+    </footer>
+  </form>
+</div>

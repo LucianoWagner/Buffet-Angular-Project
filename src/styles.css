@@ -2,3 +2,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.modal-container {
+  inline-size: 30rem;
+}
+
+@media screen and (max-width: 599px) {
+  .modal-container {
+    inline-size: 100%;
+  }
+}
+
+.title {
+  margin: 0 0 16px;
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.625rem;
+  letter-spacing: 0.01125rem;
+}

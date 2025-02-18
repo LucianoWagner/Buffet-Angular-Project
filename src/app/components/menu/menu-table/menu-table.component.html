@@ -1,89 +1,161 @@
-
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
   <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
     <!-- Start coding here -->
-    <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-      <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+    <div
+      class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden"
+    >
+      <div
+        class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4"
+      >
         <div class="w-full md:w-1/2">
           <form class="flex items-center">
             <label for="simple-search" class="sr-only">Search</label>
             <div class="relative w-full">
-              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+              <div
+                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                  fill="currentColor"
+                  viewbox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
               </div>
-              <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
+              <input
+                type="text"
+                id="simple-search"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Search"
+                required=""
+              />
             </div>
           </form>
         </div>
-        <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-          <button type="button" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-            <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-            </svg>
-            Crear menú
+        <div
+          class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
+        >
+          <button
+            tuiButton
+            appearance="secondary"
+            type="button"
+            size="m"
+            (click)="toggleAddDialog()"
+          >
+            Agregar
+            <tui-icon icon="@tui.plus" />
           </button>
-
         </div>
       </div>
       <div class="overflow-x-auto">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" >
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th *ngFor="let column of columns" scope="col" class="px-4 py-3">{{ column.label }}</th>
+        <table
+          class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+        >
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th *ngFor="let column of columns" scope="col" class="px-4 py-3">
+                {{ column.label }}
+              </th>
+            </tr>
           </thead>
           <tbody>
-          <tr class="border-b dark:border-gray-700" *ngFor="let menu of paginatedMenus">
-            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{menu.name}}</th>
-            <td class="px-4 py-3">{{menu.price}}</td>
-            <td class="px-4 py-3">{{menu.stock}}</td>
-            <td class="px-4 py-3">{{menu.date}}</td>
-            <td class="px-4 py-3">
-              <input
-                disabled
-                id="checkbox-{{menu.id}}"
-                [checked]="menu.vegetarian"
-                type="checkbox"
-                value=""
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            <tr
+              class="border-b dark:border-gray-700"
+              *ngFor="let menu of paginatedMenus"
+            >
+              <th
+                scope="row"
+                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                {{ menu.name }}
+              </th>
+              <td class="px-4 py-3">{{ menu.price }}</td>
+              <td class="px-4 py-3">{{ menu.stock }}</td>
+              <td class="px-4 py-3">{{ menu.date }}</td>
+              <td class="px-4 py-3">
+                <input
+                  disabled
+                  id="checkbox-{{ menu.id }}"
+                  [checked]="menu.vegetarian"
+                  type="checkbox"
+                  value=""
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+              </td>
+              <td class="px-4 py-3">
+                {{ findComponent(menu.components, "STARTER")?.name }}
+              </td>
+              <td class="px-4 py-3">
+                {{ findComponent(menu.components, "MAIN_DISH")?.name }}
+              </td>
+              <td class="px-4 py-3">
+                {{ findComponent(menu.components, "DESSERT")?.name }}
+              </td>
+              <td class="px-4 py-3">
+                {{ findComponent(menu.components, "DRINK")?.name }}
+              </td>
 
-              />
-            </td>
-            <td class="px-4 py-3">{{findComponent(menu.components, "STARTER")?.name}}</td>
-            <td class="px-4 py-3">{{findComponent(menu.components, "MAIN_DISH")?.name}}</td>
-            <td class="px-4 py-3">{{findComponent(menu.components, "DESSERT")?.name}}</td>
-            <td class="px-4 py-3">{{findComponent(menu.components, "DRINK")?.name}}</td>
-
-            <td class="px-4 py-3 ">
-              <app-actions-dropdown [toggleEditDialog]="toggleEditDialog.bind(this, menu)" [toggleDeleteDialog]="toggleDeleteDialog.bind(this,menu)"></app-actions-dropdown>
-
-            </td>
-          </tr>
-
+              <td class="px-4 py-3">
+                <app-actions-dropdown
+                  [toggleEditDialog]="toggleEditDialog.bind(this, menu)"
+                  [toggleDeleteDialog]="toggleDeleteDialog.bind(this, menu)"
+                ></app-actions-dropdown>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
       <nav class="flex flex-col md:flex-row justify-between items-center p-4">
-  <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-    Showing
-    <span class="font-semibold text-gray-900 dark:text-white">{{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage, totalMenus) }}</span>
-    of
-    <span class="font-semibold text-gray-900 dark:text-white">{{ totalMenus }}</span>
-  </span>
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+          Showing
+          <span class="font-semibold text-gray-900 dark:text-white"
+            >{{ (currentPage - 1) * itemsPerPage + 1 }} -{{
+              Math.min(currentPage * itemsPerPage, totalMenus)
+            }}</span
+          >
+          of
+          <span class="font-semibold text-gray-900 dark:text-white">{{
+            totalMenus
+          }}</span>
+        </span>
         <ul class="inline-flex items-stretch -space-x-px">
           <li>
-            <button (click)="prevPage()" [disabled]="currentPage === 1" class="py-1.5 px-3 border rounded-l-lg">
+            <button
+              (click)="prevPage()"
+              [disabled]="currentPage === 1"
+              class="py-1.5 px-3 border rounded-l-lg"
+            >
               ◀ Prev
             </button>
           </li>
-          <li *ngFor="let page of [].constructor(Math.ceil(totalMenus / itemsPerPage)); let i = index">
-            <button (click)="currentPage = i + 1" [class.bg-blue-500]="currentPage === i + 1" class="py-2 px-3 border">
+          <li
+            *ngFor="
+              let page of [].constructor(Math.ceil(totalMenus / itemsPerPage));
+              let i = index
+            "
+          >
+            <button
+              (click)="currentPage = i + 1"
+              [class.bg-blue-500]="currentPage === i + 1"
+              class="py-2 px-3 border"
+            >
               {{ i + 1 }}
             </button>
           </li>
           <li>
-            <button (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= totalMenus" class="py-1.5 px-3 border rounded-r-lg">
+            <button
+              (click)="nextPage()"
+              [disabled]="currentPage * itemsPerPage >= totalMenus"
+              class="py-1.5 px-3 border rounded-r-lg"
+            >
               Next ▶
             </button>
           </li>

@@ -1,20 +1,3 @@
-.modal-container {
-  inline-size: 30rem;
-}
-
-@media screen and (max-width: 599px) {
-  .modal-container {
-    inline-size: 100%;
-  }
-}
-.title {
-  margin: 0 0 16px;
-  font-weight: 500;
-  font-size: 1.125rem;
-  line-height: 1.625rem;
-  letter-spacing: 0.01125rem;
-}
-
 .grid {
   display: grid;
   gap: inherit;
@@ -33,6 +16,6 @@
   --tui-background-accent-2: var(--tui-status-info);
 }
 
-input[tuiSwitch]:checked{
-  color: #526ED3 !important;
+input[tuiSwitch]:checked {
+  color: #526ed3 !important;
 }
