@@ -46,7 +46,7 @@ import { MenuComponentService } from '../../../../core/menu/menu-component.servi
 import { MenuService } from '../../../../core/menu/menu.service';
 import { findComponentList } from '../../../../utils/utils';
 import { TuiCurrencyPipe } from '@taiga-ui/addon-commerce';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-menu-add-dialog',
@@ -191,8 +191,6 @@ export class MenuAddDialogComponent implements OnInit {
         this.submitError = new TuiValidationError(
           error.message ?? 'Se ha producido un error al añadir el menú',
         );
-      },
-      complete: () => {
         this.isSubmitting$.next(false);
       },
     });

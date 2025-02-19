@@ -8,9 +8,7 @@
     class="centered-form"
   >
     <header tuiHeader>
-      <h2 tuiTitle>
-        Registro
-      </h2>
+      <h2 tuiTitle>Registro</h2>
     </header>
 
     <tui-textfield>
@@ -29,36 +27,6 @@
     ></tui-error>
 
     <tui-textfield>
-      <label tuiLabel>Nombre</label>
-      <input
-        formControlName="name"
-        placeholder="Ingrese su nombre"
-        tuiTextfield
-        type="text"
-        required
-      />
-    </tui-textfield>
-    <tui-error
-      formControlName="name"
-      [error]="['required'] | tuiFieldError | async"
-    ></tui-error>
-
-    <tui-textfield>
-      <label tuiLabel>Apellido</label>
-      <input
-        formControlName="surname"
-        placeholder="Ingrese su apellido"
-        tuiTextfield
-        type="text"
-        required
-      />
-    </tui-textfield>
-    <tui-error
-      formControlName="surname"
-      [error]="['required'] | tuiFieldError | async"
-    ></tui-error>
-
-    <tui-textfield>
       <label tuiLabel>Correo electrónico</label>
       <input
         formControlName="email"
@@ -73,50 +41,106 @@
       [error]="['required', 'email'] | tuiFieldError | async"
     ></tui-error>
 
-    <tui-textfield>
-      <label tuiLabel>Contraseña</label>
-      <input
-        formControlName="password"
-        placeholder="Ingrese su contraseña"
-        tuiTextfield
-        type="password"
-        required
-      />
-    </tui-textfield>
-    <tui-error
-      formControlName="password"
-      [error]="['required'] | tuiFieldError | async"
-    ></tui-error>
+    <div class="grid">
+      <div class="stack">
+        <tui-textfield>
+          <label tuiLabel>Nombre</label>
+          <input
+            formControlName="name"
+            placeholder="Ingrese su nombre"
+            tuiTextfield
+            type="text"
+            required
+          />
+        </tui-textfield>
+        <tui-error
+          formControlName="name"
+          [error]="['required'] | tuiFieldError | async"
+        ></tui-error>
+      </div>
 
-    <tui-textfield>
-      <label tuiLabel>Contraseña</label>
-      <input
-        formControlName="confirm-password"
-        placeholder="Ingrese su contraseña nuevamente"
-        tuiTextfield
-        type="password"
-        required
-      />
-    </tui-textfield>
-    <tui-error
-      formControlName="password"
-      [error]="['required'] | tuiFieldError | async"
-    ></tui-error>
+      <div class="stack">
+        <tui-textfield>
+          <label tuiLabel>Apellido</label>
+          <input
+            formControlName="surname"
+            placeholder="Ingrese su apellido"
+            tuiTextfield
+            type="text"
+            required
+          />
+        </tui-textfield>
+        <tui-error
+          formControlName="surname"
+          [error]="['required'] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+
+      <div class="stack">
+        <tui-textfield>
+          <label tuiLabel>Contraseña</label>
+          <input
+            formControlName="password"
+            placeholder="Ingrese su contraseña"
+            tuiTextfield
+            type="password"
+            required
+          />
+        </tui-textfield>
+        <tui-error
+          formControlName="password"
+          [error]="['required'] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+
+      <div class="stack">
+        <tui-textfield>
+          <label tuiLabel>Confirmar contraseña</label>
+          <input
+            formControlName="confirm-password"
+            placeholder="Ingrese su contraseña nuevamente"
+            tuiTextfield
+            type="password"
+            required
+          />
+        </tui-textfield>
+        <tui-error
+          formControlName="password"
+          [error]="['required'] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+    </div>
+
+    <div class="flex flex-row justify-between">
+      <div class="relative inline-block">
+        <tui-avatar [src]="imageUrl || '@tui.user'" />
+        <button
+          tuiIconButton
+          appearance="outline-destructive"
+          iconStart="@tui.x"
+          type="button"
+          size="xs"
+          [style.border-radius.%]="100"
+          (click)="removeImage()"
+          class="absolute -top-5 -left-2 bg-none border-none z-10"
+        ></button>
+      </div>
+      <label tuiInputFiles>
+        <input
+          #validator="tuiInputFilesValidator"
+          formControlName="avatar"
+          tuiInputFiles
+          type="file"
+          accept="image/*"
+          [disabled]="isImageSelected"
+          (change)="onImageSelected($event)"
+        />
+      </label>
+    </div>
 
     <footer>
-      <button
-        appearance="secondary"
-        tuiButton
-        type="button"
-      >
-        Cancelar
-      </button>
-      <button
-        tuiButton
-        type="submit"
-      >
-        Registrarse
-      </button>
+      <button appearance="secondary" tuiButton type="button">Cancelar</button>
+      <button tuiButton type="submit">Registrarse</button>
     </footer>
   </form>
 </div>

@@ -1,0 +1,23 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.centered-form {
+  width: 100%;
+  max-width: 22rem;
+}
+
+.grid {
+  display: grid;
+  gap: inherit;
+  grid-template-columns: 1fr 1fr;
+}
+
+.stack {
+  display: flex;
+  gap: inherit;
+  flex-direction: column;
+}

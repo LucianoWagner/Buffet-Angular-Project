@@ -1,65 +1,60 @@
 <div class="form-container">
-    <form
-        tuiAppearance="floating"
-        tuiCardLarge
-        tuiForm="m"
-        [formGroup]="form"
-        (ngSubmit)="onSubmit()"
-        class="centered-form"
-    >
-        <header tuiHeader>
-            <h2 tuiTitle>
-                Iniciar sesión
-            </h2>
-        </header>
-        <tui-textfield>
-            <label tuiLabel>Correo electrónico</label>
-            <input
-                formControlName="email"
-                placeholder="Ingrese su correo electrónico"
-                tuiTextfield
-                type="email"
-                required
-            />
-        </tui-textfield>
-        <tui-error
-            formControlName="email"
-            [error]="['required', 'email'] | tuiFieldError | async"
-        ></tui-error>
+  <form
+    tuiAppearance="floating"
+    tuiCardLarge
+    tuiForm="m"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="centered-form"
+  >
+    <header tuiHeader>
+      <h2 tuiTitle>Iniciar sesión</h2>
+    </header>
+    <tui-textfield>
+      <label tuiLabel>Correo electrónico</label>
+      <input
+        formControlName="email"
+        placeholder="Ingrese su correo electrónico"
+        tuiTextfield
+        type="email"
+        required
+      />
+    </tui-textfield>
+    <tui-error
+      formControlName="email"
+      [error]="['required', 'email'] | tuiFieldError | async"
+    ></tui-error>
 
-        <tui-textfield>
-            <label tuiLabel>Contraseña</label>
-            <input
-                formControlName="password"
-                placeholder="Ingrese su contraseña"
-                tuiTextfield
-                type="password"
-                required
-            />
-        </tui-textfield>
-        <tui-error
-            formControlName="password"
-            [error]="['required'] | tuiFieldError | async"
-        ></tui-error>
+    <tui-textfield>
+      <label tuiLabel>Contraseña</label>
+      <input
+        formControlName="password"
+        placeholder="Ingrese su contraseña"
+        tuiTextfield
+        type="password"
+        required
+      />
+    </tui-textfield>
+    <tui-error
+      formControlName="password"
+      [error]="['required'] | tuiFieldError | async"
+    ></tui-error>
 
-        <p *ngIf="form.errors?.['backend']">
-          {{form.errors?.['backend']}}
-        </p>
+    <p class="text-red-600 text-sm" *ngIf="form.errors?.['backend']">
+      {{ form.errors?.["backend"] }}
+    </p>
 
-        <footer>
-            <button
-                appearance="secondary"
-                tuiButton
-                type="button"
-            >
-                Cancel
-            </button>
-            <button
-                tuiButton
-                type="submit"
-            >
-                Submit
-            </button>
-        </footer>
-    </form>
+    <p></p>
+
+    <footer>
+      <div class="flex flex-col space-y-2">
+        <div class="flex flex-row gap-2">
+          <button tuiButton type="submit">Iniciar Sesion</button>
+        </div>
+        <div class="">
+          No tienes una cuenta?<a href="/register" tuiLink> Registrarse </a>
+        </div>
+      </div>
+    </footer>
+  </form>
 </div>

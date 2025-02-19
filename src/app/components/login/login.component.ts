@@ -12,6 +12,7 @@ import {
   TuiError,
   TuiIcon,
   TuiLabel,
+  TuiLink,
   TuiNotification,
   TuiTextfield,
   TuiTextfieldComponent,
@@ -52,6 +53,7 @@ import { Router } from '@angular/router';
     TuiTextfieldDirective,
     TuiLabel,
     TuiTextfieldComponent,
+    TuiLink,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
@@ -87,7 +89,7 @@ export default class LoginComponent {
         },
 
         error: (error) => {
-          console.log(error.message);
+          this.form.setErrors({ backend: error.message });
         },
       });
     }

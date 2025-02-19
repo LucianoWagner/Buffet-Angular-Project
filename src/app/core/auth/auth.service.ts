@@ -36,9 +36,13 @@ export class AuthService {
         tap((tokens) => {
           this.storeTokens(tokens.access_token, tokens.refresh_token);
         }),
-        catchError((error) => {
-          console.error(error);
-          return throwError(() => new Error('Login failed'));
+        catchError((error: HttpErrorResponse) => {
+          let message = 'Login failed';
+          if (error?.error?.status === 403) {
+            message = 'La combinación de correo y contraseña no es válida';
+          }
+
+          return throwError(() => new Error(message));
         }),
       );
   }

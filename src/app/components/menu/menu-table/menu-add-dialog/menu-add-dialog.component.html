@@ -192,7 +192,7 @@
       <button
         tuiButton
         type="submit"
-        [disabled]="form.invalid"
+        [disabled]="form.invalid || (isSubmitting$ | async)"
         [loading]="isSubmitting$ | async"
       >
         Guardar

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { enviorment } from '../../../enviorments/enviorments';
 import { Menu, MenuUpdate } from '../../models/menu.model';
@@ -29,9 +29,16 @@ export class MenuService {
    */
   createMenu(menuData: MenuUpdate): Observable<Menu> {
     return this.http.post<Menu>(this.apiUrl, menuData).pipe(
-      catchError((error) => {
-        console.error('Error al crear el menú:', error);
-        return throwError(() => new Error('No se pudo crear el menú'));
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = 'No se pudo crear el menú';
+
+        if (error?.error?.errorCode === 'RECURSO_YA_EXISTENTE') {
+          errorMessage = menuData.isVegetarian
+            ? 'Ya existe un menú vegetariano para la fecha seleccionada'
+            : 'Ya existe un menú no vegetariano para la fecha seleccionada';
+        }
+
+        return throwError(() => new Error(errorMessage));
       }),
     );
   }
