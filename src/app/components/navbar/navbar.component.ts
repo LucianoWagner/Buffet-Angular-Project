@@ -15,10 +15,12 @@ import {NgClass, NgForOf} from '@angular/common';
 })
 export class NavbarComponent {
 
+
   constructor(
     private authService: AuthService,
     private router: Router,
   ) {}
+
 
    navBarOptions = [
      {name: "Menus", href: "/menus"},
