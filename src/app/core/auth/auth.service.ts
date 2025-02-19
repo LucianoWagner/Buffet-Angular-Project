@@ -78,10 +78,16 @@ export class AuthService {
           console.log('User registered successfully:', response.message);
         }),
         catchError((error) => {
-          console.error('Registration error:', error);
-          return throwError(
-            () => new Error(error.message || 'Registration failed'),
-          );
+          let message = 'Ha ocurrido un error. Intente de nuevo';
+          if (error.error.errorCode === 'EMAIL_YA_EXISTENTE') {
+            message = 'Este correo ya está registrado';
+          } else if (error.error.errorCode === 'DNI_YA_EXISTENTE') {
+            message = 'Este DNI ya está registrado';
+          } else {
+            message = 'Ha ocurrido un error. Intente de nuevo';
+          }
+
+          return throwError(() => new Error(message));
         }),
       );
   }

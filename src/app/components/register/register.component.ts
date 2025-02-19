@@ -37,6 +37,7 @@ import { TuiCardLarge, TuiForm, TuiHeader } from '@taiga-ui/layout';
 import { AuthService } from '../../core/auth/auth.service';
 import { Router } from '@angular/router';
 import { passwordMatchValidator } from '../../utils/utils';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -68,7 +69,7 @@ import { passwordMatchValidator } from '../../utils/utils';
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
   providers: [
     tuiValidationErrorsProvider({
       required: 'Este campo es obligatorio',
@@ -143,21 +144,10 @@ export default class RegisterComponent {
           console.log('User registered');
           this.router.navigate(['/']);
         },
-        error: (error) => {
-          console.error('Register error:', error);
-          if (error.error.code === 'EMAIL_YA_EXISTENTE') {
-            this.form
-              .get('email')
-              ?.setErrors({ backend: 'Este correo ya está en uso' });
-          } else if (error.error.code === 'DNI_YA_EXISTENTE') {
-            this.form
-              .get('dni')
-              ?.setErrors({ backend: 'Este DNI ya está registrado' });
-          } else {
-            this.form.setErrors({
-              backend: 'Se ha producido un error. Intente de nuevo',
-            });
-          }
+        error: (error: Error) => {
+          this.form.setErrors({ backend: error.message });
+          this.form.markAsTouched();
+          this.form.markAsDirty();
         },
       });
   }
