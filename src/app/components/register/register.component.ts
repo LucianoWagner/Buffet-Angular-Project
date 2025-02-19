@@ -16,6 +16,7 @@ import {
   TuiError,
   TuiIcon,
   TuiLabel,
+  TuiLink,
   TuiNotification,
   TuiTextfield,
   TuiTextfieldComponent,
@@ -63,6 +64,7 @@ import { passwordMatchValidator } from '../../utils/utils';
     TuiTextfieldComponent,
     TuiAvatar,
     TuiFiles,
+    TuiLink,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
@@ -88,7 +90,7 @@ export default class RegisterComponent {
         Validators.minLength(6),
       ]),
       confirmPassword: new FormControl('', Validators.required),
-      avatar: new FormControl<TuiFileLike | null>(null),
+      avatar: new FormControl<File | null>(null),
     },
     {
       validators: passwordMatchValidator,
@@ -130,21 +132,13 @@ export default class RegisterComponent {
   }
 
   onSubmit(): void {
-    if (this.form.valid) {
-      const { dni, name, surname, email, password, confirmPassword } =
-        this.form.value;
+    const { dni, name, surname, email, password } = this.form.value;
+    const avatar = this.form.get('avatar')?.value as File | null;
+    console.log('Avatar:', avatar);
 
-      if (password!.length < 6) {
-        this.form.get('password')?.setErrors({ minlength: true });
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        this.form.get('confirmPassword')?.setErrors({ mismatch: true });
-        return;
-      }
-
-      this.authService.register(dni, name, surname, email, password).subscribe({
+    this.authService
+      .register(dni!, name!, surname!, email!, password!, avatar!)
+      .subscribe({
         next: () => {
           console.log('User registered');
           this.router.navigate(['/']);
@@ -166,6 +160,5 @@ export default class RegisterComponent {
           }
         },
       });
-    }
   }
 }

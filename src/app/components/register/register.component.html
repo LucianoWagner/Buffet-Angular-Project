@@ -97,7 +97,7 @@
         <tui-textfield>
           <label tuiLabel>Confirmar contraseña</label>
           <input
-            formControlName="confirm-password"
+            formControlName="confirmPassword"
             placeholder="Ingrese su contraseña nuevamente"
             tuiTextfield
             type="password"
@@ -139,8 +139,14 @@
     </div>
 
     <footer>
-      <button appearance="secondary" tuiButton type="button">Cancelar</button>
-      <button tuiButton type="submit">Registrarse</button>
+      <div class="flex flex-col space-y-2">
+        <div class="flex flex-row gap-2">
+          <button tuiButton type="submit">Registrarse</button>
+        </div>
+        <div class="">
+          Ya tienes una cuenta?<a href="/login" tuiLink> Iniciar sesion</a>
+        </div>
+      </div>
     </footer>
   </form>
 </div>
