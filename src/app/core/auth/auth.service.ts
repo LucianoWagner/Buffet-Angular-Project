@@ -130,6 +130,15 @@ export class AuthService {
     return decodedToken.permissions || [];
   }
 
+  getUsername(): string {
+    const accessToken = this.getAccessToken();
+    if (!accessToken) {
+      return '';
+    }
+    const decodedToken = jwtDecode<JwtPayload>(accessToken);
+    return decodedToken.sub;
+  }
+
   private storeTokens(accessToken: string, refreshToken: string): void {
     const cookieOptions: CookieOptions = {
       path: '/',
