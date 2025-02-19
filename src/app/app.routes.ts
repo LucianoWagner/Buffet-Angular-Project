@@ -10,6 +10,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { MenuComponent } from './components/menu/menu.component';
 import RegisterComponent from './components/register/register.component';
 import { MenuComponentTableComponent } from './components/menu-component/menu-component-table/menu-component-table.component';
+import { MenuComponentsComponent } from './components/menu-component/menu-component.component';
 
 export const routes: Routes = [
   {
@@ -28,7 +29,7 @@ export const routes: Routes = [
       },
       {
         path: 'components',
-        component: MenuComponentComponent,
+        component: MenuComponentsComponent,
       },
     ],
   },

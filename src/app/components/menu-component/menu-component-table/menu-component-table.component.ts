@@ -1,7 +1,7 @@
-import {NgForOf, NgIf} from '@angular/common';
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {TuiTable} from '@taiga-ui/addon-table';
+import { NgForOf, NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { TuiTable } from '@taiga-ui/addon-table';
 import {
   TuiAutoColorPipe,
   TuiButton,
@@ -21,11 +21,11 @@ import {
   TuiRadioList,
   TuiStatus,
 } from '@taiga-ui/kit';
-import {TuiCell} from '@taiga-ui/layout';
+import { TuiCell } from '@taiga-ui/layout';
 
 @Component({
   standalone: true,
-  exportAs: "Example2",
+  exportAs: 'Example2',
   imports: [
     FormsModule,
     NgForOf,
@@ -52,7 +52,7 @@ import {TuiCell} from '@taiga-ui/layout';
   styleUrls: ['./index.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class MenuComponentTableComponent {
+export class MenuComponentTableComponent {
   protected readonly sizes = ['l', 'm', 's'] as const;
 
   protected size = this.sizes[0];
@@ -127,8 +127,8 @@ export default class MenuComponentTableComponent {
   ];
 
   protected get checked(): boolean | null {
-    const every = this.data.every(({selected}) => selected);
-    const some = this.data.some(({selected}) => selected);
+    const every = this.data.every(({ selected }) => selected);
+    const some = this.data.some(({ selected }) => selected);
 
     return every || (some && null);
   }
