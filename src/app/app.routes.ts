@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { MenuComponent } from './components/menu/menu.component';
 import RegisterComponent from './components/register/register.component';
+import { MenuComponentTableComponent } from './components/menu-component/menu-component-table/menu-component-table.component';
 
 export const routes: Routes = [
   {
@@ -27,7 +28,7 @@ export const routes: Routes = [
       },
       {
         path: 'components',
-        component: HomeComponent,
+        component: MenuComponentComponent,
       },
     ],
   },

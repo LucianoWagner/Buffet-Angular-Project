@@ -1,143 +1,70 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MenuComponentService } from '../../core/menu/menu-component.service';
-import { TuiDialogService, TuiNotification, TuiAlertService } from '@taiga-ui/core';
-import { Observable } from 'rxjs';
-import {initFlowbite} from 'flowbite';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { TuiTable } from '@taiga-ui/addon-table';
+import {
+  TuiAutoColorPipe,
+  TuiButton,
+  TuiIcon,
+  TuiInitialsPipe,
+  TuiTitle,
+} from '@taiga-ui/core';
+import {
+  TuiBadge,
+  TuiCheckbox,
+  TuiChip,
+  TuiRadioList,
+  TuiStatus,
+} from '@taiga-ui/kit';
+import { TuiCell } from '@taiga-ui/layout';
 
 interface MenuComponent {
   id: number;
-  name: string;
-  imageUrl?: string;
-  type: string;
+  nombre: string;
+  tipo: string;
 }
 
 @Component({
-  selector: 'app-menu-component',
-  templateUrl: './menu-component.component.html',
+  selector: 'app-menu-components',
   standalone: true,
-  styleUrls: ['./menu-component.component.scss']
+  imports: [
+    FormsModule,
+    TuiAutoColorPipe,
+    TuiBadge,
+    TuiButton,
+    TuiCell,
+    TuiCheckbox,
+    TuiChip,
+    TuiIcon,
+    TuiInitialsPipe,
+    TuiRadioList,
+    TuiStatus,
+    TuiTable,
+    TuiTitle,
+  ],
+  templateUrl: './menu-items.component.html',
+  styleUrls: ['./menu-items.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MenuComponentComponent implements OnInit {
-  menuComponents: MenuComponent[] = [];
-  form: FormGroup;
-  isModalOpen = false;
-  isEditing = false;
-  selectedComponent: MenuComponent | null = null;
-  menuComponentTypes = ['Entrada', 'Plato Principal', 'Postre', 'Bebida'];
-  activeDropdownId: number | null = null;
+export class MenuComponentsComponent implements OnInit {
+  protected readonly sizes = ['l', 'm', 's'] as const;
+  protected size = this.sizes[0];
+  protected data: MenuComponent[] = [];
 
-  constructor(
-    private menuComponentService: MenuComponentService,
-    private fb: FormBuilder,
-    private alertService: TuiAlertService,
-    private dialogService: TuiDialogService
-  ) {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      imageUrl: [''],
-      type: ['', Validators.required]
-    });
-  }
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.loadMenuComponents();
-
+    this.fetchMenuComponents();
   }
 
-
-
-  // Cargar la lista de componentes del menú
-  loadMenuComponents(): void {
-    this.menuComponentService.getAllMenuComponents().subscribe({
-      next: (components) => this.menuComponents = components,
-      error: () => this.showNotification('Error al cargar los componentes', 'error')
-    });
-  }
-
-  // Abrir modal para agregar un nuevo componente
-  openAddModal(): void {
-    this.isEditing = false;
-    this.selectedComponent = null;
-    this.form.reset();
-    this.isModalOpen = true;
-  }
-
-  // Abrir modal para editar un componente existente
-  openEditModal(component: MenuComponent): void {
-    this.isEditing = true;
-    this.selectedComponent = component;
-    this.form.patchValue(component);
-    this.isModalOpen = true;
-  }
-
-  // Cerrar modal
-  closeModal(): void {
-    this.isModalOpen = false;
-    this.form.reset();
-  }
-
-  // Enviar formulario para agregar o editar
-  onSubmit(): void {
-    if (this.form.invalid) {
-      return;
-    }
-
-    const formData = this.form.value;
-
-    if (this.isEditing && this.selectedComponent) {
-      this.updateComponent(this.selectedComponent.id, formData);
-    } else {
-      this.createComponent(formData);
-    }
-  }
-
-  // Crear un nuevo componente de menú
-  createComponent(data: MenuComponent): void {
-    this.menuComponentService.addMenuComponent(data).subscribe({
-      next: (newComponent) => {
-        this.menuComponents.push(newComponent);
-        this.showNotification('Componente agregado exitosamente', 'success');
-        this.closeModal();
+  private fetchMenuComponents(): void {
+    this.http.get<MenuComponent[]>('/menu-components').subscribe(
+      (response) => {
+        this.data = response;
       },
-      error: () => this.showNotification('Error al agregar el componente', 'error')
-    });
-  }
-
-  // Actualizar un componente existente
-  updateComponent(id: number, data: MenuComponent): void {
-    this.menuComponentService.updateMenuComponent(id, data).subscribe({
-      next: (updatedComponent) => {
-        const index = this.menuComponents.findIndex(c => c.id === id);
-        if (index !== -1) {
-          this.menuComponents[index] = <MenuComponent>updatedComponent;
-        }
-        this.showNotification('Componente actualizado exitosamente', 'success');
-        this.closeModal();
-      },
-      error: () => this.showNotification('Error al actualizar el componente', 'error')
-    });
-  }
-
-// Eliminar un componente con confirmación
-  deleteComponent(id: number): void {
-    this.dialogService.open('¿Seguro que quieres eliminar este componente?', { label: 'Confirmar Eliminación' }).subscribe({
-      next: (confirmed: boolean | void) => { // Aseguramos que confirmed sea boolean o void
-        if (confirmed) {
-          this.menuComponentService.deleteMenuComponent(id).subscribe({
-            next: () => {
-              this.menuComponents = this.menuComponents.filter(c => c.id !== id);
-              this.showNotification('Componente eliminado exitosamente', 'success');
-            },
-            error: () => this.showNotification('Error al eliminar el componente', 'error')
-          });
-        }
+      (error) => {
+        console.error('Error fetching menu components', error);
       }
-    });
-  }
-
-  // Mostrar notificaciones
-  private showNotification(message: string, type: 'success' | 'error'): void {
-    this.alertService.open(message).subscribe();
+    );
   }
 }
