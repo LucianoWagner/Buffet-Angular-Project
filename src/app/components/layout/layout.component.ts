@@ -13,6 +13,7 @@ import {NgClass, NgForOf} from '@angular/common';
   styleUrl: './layout.component.css'
 })
 export class LayoutComponent implements OnInit{
+  userEmail: string | null = null; // Variable para guardar el correo del usuario
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -34,6 +35,7 @@ export class LayoutComponent implements OnInit{
 
   ngOnInit() {
     initFlowbite();
+    this.userEmail = this.authService.getUsername(); // Obtiene el email del usuario
   }
 
 }
