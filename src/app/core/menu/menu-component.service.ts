@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { enviorment } from '../../../enviorments/enviorments';
+import { MenuComponentAdd } from '../../models/menu.model';
 
 export interface MenuComponent {
   id?: number;
@@ -22,8 +23,15 @@ export class MenuComponentService {
    * Crea un nuevo componente de menú.
    * @param component Datos del componente a agregar.
    */
-  addMenuComponent(component: MenuComponent): Observable<MenuComponent> {
-    return this.http.post<MenuComponent>(this.apiUrl, component).pipe(
+  addMenuComponent(component: MenuComponentAdd): Observable<MenuComponent> {
+    const formData = new FormData();
+    formData.append('name', component.name);
+    formData.append('type', component.type);
+    if (component.image) {
+      formData.append('image', component.image);
+    }
+
+    return this.http.post<MenuComponent>(this.apiUrl, formData).pipe(
       catchError((error) => {
         if (error.error) {
           const message = error.error.message || 'Error al crear el componente';
@@ -41,11 +49,18 @@ export class MenuComponentService {
    */
   updateMenuComponent(
     id: number,
-    component: MenuComponent,
+    component: MenuComponentAdd,
   ): Observable<MenuComponent> {
-    return this.http.put<MenuComponent>(`${this.apiUrl}/${id}`, component).pipe(
+    const formData = new FormData();
+    formData.append('name', component.name);
+    formData.append('type', component.type);
+    if (component.image) {
+      formData.append('image', component.image);
+    }
+
+    return this.http.put<MenuComponent>(`${this.apiUrl}/${id}`, formData).pipe(
       catchError((error) => {
-        if (error.error.code === 'RECURSO_YA_EXISTENTE') {
+        if (error.error.errorCode === 'RECURSO_YA_EXISTENTE') {
           return throwError(
             () => new Error('Ya existe un componente con ese nombre'),
           );

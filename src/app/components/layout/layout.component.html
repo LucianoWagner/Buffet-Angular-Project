@@ -1,5 +1,7 @@
 <div class="antialiased bg-gray-50 dark:bg-gray-900">
-  <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
+  <nav
+    class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50"
+  >
     <div class="flex flex-wrap justify-between items-center">
       <div class="flex justify-start items-center">
         <button
@@ -36,15 +38,20 @@
           </svg>
           <span class="sr-only">Toggle sidebar</span>
         </button>
-        <a href="http://localhost:4200/home" class="flex items-center justify-between mr-4">
+        <a
+          href="http://localhost:4200/home"
+          class="flex items-center justify-between mr-4"
+        >
           <img
             src="https://www.info.unlp.edu.ar/wp-content/uploads/2019/07/logoo-300x300.jpg"
             class="mr-3 h-8"
             alt="Google Logo"
           />
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Buffet UNLP</span>
+          <span
+            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+            >Buffet UNLP</span
+          >
         </a>
-
       </div>
       <div class="flex items-center lg:order-2">
         <button
@@ -54,11 +61,20 @@
           class="p-2 mr-1 text-gray-500 rounded-lg md:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
         >
           <span class="sr-only">Toggle search</span>
-          <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path clip-rule="evenodd" fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path>
+          <svg
+            aria-hidden="true"
+            class="w-6 h-6"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+            ></path>
           </svg>
         </button>
-
 
         <button
           type="button"
@@ -76,20 +92,19 @@
         </button>
         <!-- Dropdown menu -->
         <div
-          class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
+          class="hidden z-150 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
           id="dropdown"
         >
           <div class="py-3 px-4">
-              <span
-                class="block text-sm font-semibold text-gray-900 dark:text-white"
+            <span
+              class="block text-sm font-semibold text-gray-900 dark:text-white"
               >Su correo:</span
-              >
+            >
             <span
               class="block text-sm text-gray-900 truncate dark:text-white"
-            >{{userEmail || 'Error al cargar su mail' }}</span
+              >{{ userEmail || "Error al cargar su mail" }}</span
             >
           </div>
-
 
           <ul
             class="py-1 text-gray-700 dark:text-gray-300"
@@ -100,7 +115,7 @@
                 href="#"
                 class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 (click)="onLogout()"
-              >Sign out</a
+                >Sign out</a
               >
             </li>
           </ul>
@@ -112,35 +127,33 @@
   <!-- Sidebar -->
 
   <aside
-    class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+    class="fixed top-0 left-0 z-50 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
     aria-label="Sidenav"
     id="drawer-navigation"
   >
     <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
-
       <ul class="space-y-2">
         <li *ngFor="let option of navBarOptions">
           <a
-            href="{{option.href}}"
+            href="{{ option.href }}"
             [ngClass]="{
-        'text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white': isActive(option.href),
-        'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white': !isActive(option.href)
-      }"
+              'text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white':
+                isActive(option.href),
+              'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white':
+                !isActive(option.href),
+            }"
             class="flex items-center p-2 text-base font-medium rounded-lg transition duration-300"
-
           >
-            <img src="{{option.icon}}" class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" alt="icon"/>
+            <img
+              src="{{ option.icon }}"
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              alt="icon"
+            />
 
-
-
-            <span class="ml-3">{{option.name}}</span>
+            <span class="ml-3">{{ option.name }}</span>
           </a>
         </li>
-
-
-
       </ul>
-
     </div>
     <div
       class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20"
