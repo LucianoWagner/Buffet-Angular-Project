@@ -39,6 +39,7 @@ import { MenuDeleteDialogComponent } from '../../menu/menu-table/menu-delete-dia
 import { MenuAddDialogComponent } from '../../menu/menu-table/menu-add-dialog/menu-add-dialog.component';
 import { MenuComponentEditDialogComponent } from '../menu-component-edit-dialog/menu-component-edit-dialog.component';
 import { ActionsDropdownComponent } from '../../menu/menu-table/actions-dropdown/actions-dropdown.component';
+import {menuTypes} from '../../../utils/consts';
 
 @Component({
   standalone: true,
@@ -131,9 +132,14 @@ export class MenuComponentTableComponent {
   protected toggleEditDialog(menuComponent: MenuComponent): void {
     this.editDialog(menuComponent).subscribe({
       next: (menuComponent) => {
-        // Do something
+        this.refreshMenuComponents.emit();
       },
     });
+  }
+
+  getMenuTypeLabel(value: string): string {
+    const menuType = menuTypes.find(type => type.value === value);
+    return menuType ? menuType.label : value;
   }
 
   protected readonly Math = Math;

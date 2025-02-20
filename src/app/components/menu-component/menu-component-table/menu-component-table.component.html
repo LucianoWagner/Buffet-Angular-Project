@@ -71,7 +71,7 @@
               *ngFor="let menuComponent of paginatedMenuComponents"
             >
               <td class="px-4 py-3">{{ menuComponent.name }}</td>
-              <td class="px-4 py-3">{{ menuComponent.type }}</td>
+              <td class="px-4 py-3">{{ getMenuTypeLabel(menuComponent.type) }}</td>
               <td class="px-4 py-3">
                 <app-actions-dropdown
                   [toggleEditDialog]="

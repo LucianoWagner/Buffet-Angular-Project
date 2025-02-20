@@ -53,7 +53,7 @@ export class MenuComponentsComponent implements OnInit {
     this.fetchMenuComponents();
   }
 
-  private fetchMenuComponents(): void {
+  protected fetchMenuComponents(): void {
     this.menuComponentService.getAllMenuComponents().subscribe({
       next: (menuComponents) => {
         this.menuComponents = menuComponents;

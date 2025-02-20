@@ -1,4 +1,5 @@
 <app-menu-component-table
   [menuComponents]="menuComponents"
   [columns]="columns"
+  (refreshMenuComponents)="fetchMenuComponents()"
 ></app-menu-component-table>
