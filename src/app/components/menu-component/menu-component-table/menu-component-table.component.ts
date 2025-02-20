@@ -39,6 +39,9 @@ import { MenuDeleteDialogComponent } from '../../menu/menu-table/menu-delete-dia
 import { MenuAddDialogComponent } from '../../menu/menu-table/menu-add-dialog/menu-add-dialog.component';
 import { MenuComponentEditDialogComponent } from '../menu-component-edit-dialog/menu-component-edit-dialog.component';
 import { ActionsDropdownComponent } from '../../menu/menu-table/actions-dropdown/actions-dropdown.component';
+import {
+  MenuComponentDeleteDialogComponent
+} from '../menu-component-delete-dialog/menu-component-delete-dialog.component';
 import {menuTypes} from '../../../utils/consts';
 
 @Component({
@@ -117,6 +120,22 @@ export class MenuComponentTableComponent {
     dismissible: true,
     closeable: true,
   });
+
+  private readonly  deleteDialog = tuiDialog(MenuComponentDeleteDialogComponent, {
+    dismissible: true,
+    closeable: true,
+  })
+
+  protected toggleDeleteDialog(menuComponent: MenuComponent): void {
+    this.deleteDialog(menuComponent).subscribe({
+      next: (result) => {
+        this.refreshMenuComponents.emit();
+      },
+      complete: () => {
+        console.log('dialog closed');
+      },
+    });
+  }
 
   protected toggleAddDialog(): void {
     this.addDialog(undefined).subscribe({
