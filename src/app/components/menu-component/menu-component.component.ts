@@ -42,7 +42,6 @@ import { MenuComponentTableComponent } from './menu-component-table/menu-compone
   ],
   templateUrl: './menu-component.component.html',
   styleUrls: ['./menu-component.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponentsComponent implements OnInit {
   menuComponents: MenuComponent[] = [];
@@ -58,6 +57,7 @@ export class MenuComponentsComponent implements OnInit {
     this.menuComponentService.getAllMenuComponents().subscribe({
       next: (menuComponents) => {
         this.menuComponents = menuComponents;
+        console.log(this.menuComponents);
       },
     });
   }
