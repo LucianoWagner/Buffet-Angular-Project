@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {Menu, MenuComponent} from '../../../models/menu.model';
+import { Menu, MenuComponent } from '../../../models/menu.model';
 import { NgForOf, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
@@ -34,10 +34,11 @@ import {
 import { TuiCell } from '@taiga-ui/layout';
 import { MenuComponentAddDialogComponent } from '../menu-component-add-dialog/menu-component-add-dialog.component';
 
-import {MenuEditDialogComponent} from '../../menu/menu-table/menu-edit-dialog/menu-edit-dialog.component';
-import {MenuDeleteDialogComponent} from '../../menu/menu-table/menu-delete-dialog/menu-delete-dialog.component';
-import {MenuAddDialogComponent} from '../../menu/menu-table/menu-add-dialog/menu-add-dialog.component';
-import {MenuComponentEditDialogComponent} from '../menu-component-edit-dialog/menu-component-edit-dialog.component';
+import { MenuEditDialogComponent } from '../../menu/menu-table/menu-edit-dialog/menu-edit-dialog.component';
+import { MenuDeleteDialogComponent } from '../../menu/menu-table/menu-delete-dialog/menu-delete-dialog.component';
+import { MenuAddDialogComponent } from '../../menu/menu-table/menu-add-dialog/menu-add-dialog.component';
+import { MenuComponentEditDialogComponent } from '../menu-component-edit-dialog/menu-component-edit-dialog.component';
+import { ActionsDropdownComponent } from '../../menu/menu-table/actions-dropdown/actions-dropdown.component';
 
 @Component({
   standalone: true,
@@ -63,6 +64,7 @@ import {MenuComponentEditDialogComponent} from '../menu-component-edit-dialog/me
     TuiStatus,
     TuiTable,
     TuiTitle,
+    ActionsDropdownComponent,
   ],
   templateUrl: './menu-component-table.component.html',
   styleUrls: ['./menu-component-table.component.less'],
@@ -72,7 +74,6 @@ export class MenuComponentTableComponent {
   @Input() menuComponents: MenuComponent[] = [];
   @Input() columns: { id: string; label: string }[] = [];
   @Output() refreshMenuComponents = new EventEmitter<void>();
-
 
   currentPage: number = 1;
   itemsPerPage: number = 5;
@@ -86,8 +87,11 @@ export class MenuComponentTableComponent {
 
   get paginatedMenuComponents(): MenuComponent[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    console.log(this.menuComponents)
-    return this.menuComponents.slice(startIndex, startIndex + this.itemsPerPage);
+    console.log(this.menuComponents);
+    return this.menuComponents.slice(
+      startIndex,
+      startIndex + this.itemsPerPage,
+    );
   }
 
   nextPage(): void {
@@ -120,9 +124,8 @@ export class MenuComponentTableComponent {
       },
       complete: () => {
         console.log('Dialog closed');
-      }
+      },
     });
-
   }
 
   protected toggleEditDialog(menuComponent: MenuComponent): void {
@@ -134,5 +137,4 @@ export class MenuComponentTableComponent {
   }
 
   protected readonly Math = Math;
-
-  }
+}
