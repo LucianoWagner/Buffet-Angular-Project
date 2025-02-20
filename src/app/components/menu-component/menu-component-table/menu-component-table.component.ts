@@ -25,6 +25,7 @@ import {
 import { TuiCell } from '@taiga-ui/layout';
 import { MenuComponentAddDialogComponent } from '../menu-component-add-dialog/menu-component-add-dialog.component';
 import { MenuComponent } from '../../../models/menu.model';
+import { MenuComponentEditDialogComponent } from '../menu-component-edit-dialog/menu-component-edit-dialog.component';
 
 @Component({
   standalone: true,
@@ -51,15 +52,27 @@ import { MenuComponent } from '../../../models/menu.model';
     TuiTable,
     TuiTitle,
   ],
-  templateUrl: './index.html',
-  styleUrls: ['./index.less'],
+  templateUrl: './menu-component-table.component.html',
+  styleUrls: ['./menu-component-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponentTableComponent {
   @Input() menuComponents: MenuComponent[] = [];
   @Input() columns: { id: string; label: string }[] = [];
   protected readonly sizes = ['l', 'm', 's'] as const;
+
+  testMenuComponent: MenuComponent = {
+    id: 9,
+    name: 'Test',
+    type: 'STARTER',
+    imageUrl: undefined,
+  };
   private readonly addDialog = tuiDialog(MenuComponentAddDialogComponent, {
+    dismissible: true,
+    closeable: true,
+  });
+
+  private readonly editDialog = tuiDialog(MenuComponentEditDialogComponent, {
     dismissible: true,
     closeable: true,
   });
@@ -67,6 +80,14 @@ export class MenuComponentTableComponent {
   protected toggleAddDialog(): void {
     this.addDialog(undefined).subscribe({
       next: () => {
+        // Do something
+      },
+    });
+  }
+
+  protected toggleEditDialog(menuComponent: MenuComponent): void {
+    this.editDialog(menuComponent).subscribe({
+      next: (menuComponent) => {
         // Do something
       },
     });

@@ -1,5 +1,5 @@
 <div class="modal-container">
-  <h1 class="title">Agregar componente de menu</h1>
+  <h1 class="title">Editar Componente de Menu</h1>
   <form
     tuiForm="l"
     class="mb-5"
@@ -23,6 +23,7 @@
           [error]="[] | tuiFieldError | async"
         />
       </div>
+
       <div class="stack">
         <tui-select
           formControlName="type"
@@ -53,8 +54,8 @@
           iconStart="@tui.x"
           type="button"
           size="xs"
-          [style.border-radius.%]="100"
           (click)="removeImage()"
+          [style.border-radius.%]="100"
           class="absolute -top-14 left-10 bg-none border-none z-10"
         ></button>
       </div>
@@ -66,25 +67,21 @@
             tuiInputFiles
             type="file"
             accept="image/*"
-            [disabled]="isImageSelected"
             (change)="onImageSelected($event)"
+            [disabled]="isImageSelected"
           />
         </label>
       </div>
     </div>
 
+    <p *ngIf="form.errors?.['backend']" class="text-red-600 text-sm space-y-2">
+      {{ form.errors?.["backend"] }}
+    </p>
     <footer class="flex justify-end mt-2">
-      <button tuiButton type="button" appearance="flat" (click)="closeDialog()">
+      <button appearance="flat" tuiButton type="button" (click)="closeDialog()">
         Cancelar
       </button>
-      <button
-        tuiButton
-        type="submit"
-        [disabled]="form.invalid || (isSubmitting$ | async)"
-        [loading]="isSubmitting$ | async"
-      >
-        Guardar
-      </button>
+      <button tuiButton type="submit">Guardar</button>
     </footer>
   </form>
 </div>

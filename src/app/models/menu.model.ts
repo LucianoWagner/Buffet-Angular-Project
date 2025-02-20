@@ -1,13 +1,12 @@
 export interface Menu {
   id?: number;
-  name:string;
+  name: string;
   vegetarian: boolean;
   date: string;
-  price:number;
-  stock:number;
+  price: number;
+  stock: number;
   components: MenuComponent[];
 }
-
 
 export interface MenuComponent {
   id?: number;
@@ -15,7 +14,6 @@ export interface MenuComponent {
   imageUrl?: string;
   type: string;
 }
-
 
 export interface MenuUpdate {
   name: string;
@@ -27,6 +25,10 @@ export interface MenuUpdate {
   mainDish?: number;
   dessert?: number;
   drink?: number;
+}
 
-
+export interface MenuComponentAdd {
+  name: string;
+  type: string;
+  image?: File;
 }
