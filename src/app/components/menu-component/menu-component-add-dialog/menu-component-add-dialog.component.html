@@ -1,1 +1,54 @@
-<p>menu-component-add-dialog works!</p>
+<div class="modal-container">
+  <h1 class="title">Agregar componente de menu</h1>
+  <form tuiForm="l" class="mb-10" [formGroup]="form" [style.max-width.rem]="32">
+    <tui-textfield>
+      <label tuiLabel>Nombre</label>
+      <input
+        formControlName="name"
+        placeholder="Ingrese el nombre"
+        tuiTextfield
+        required
+      />
+    </tui-textfield>
+    <tui-error formControlName="name" [error]="[] | tuiFieldError | async" />
+    <tui-select formControlName="type" #select>
+      <tui-data-list *tuiDataList>
+        <button
+          *ngFor="let type of menuTypes"
+          tuiOption
+          type="button"
+          [value]="type.value"
+        >
+          {{ type.label }}
+        </button>
+      </tui-data-list>
+    </tui-select>
+
+    <div class="flex flex-row justify-between">
+      <div class="relative inline-block">
+        <tui-avatar [src]="imageUrl || '@tui.user'" />
+        <button
+          tuiIconButton
+          appearance="outline-destructive"
+          iconStart="@tui.x"
+          type="button"
+          size="xs"
+          [style.border-radius.%]="100"
+          (click)="removeImage()"
+          class="absolute -top-5 -left-2 bg-none border-none z-10"
+        ></button>
+      </div>
+      <label tuiInputFiles>
+        <input
+          #validator="tuiInputFilesValidator"
+          formControlName="avatar"
+          tuiInputFiles
+          type="file"
+          accept="image/*"
+          [disabled]="isImageSelected"
+          (change)="onImageSelected($event)"
+        />
+      </label>
+    </div>
+  </form>
+</div>
