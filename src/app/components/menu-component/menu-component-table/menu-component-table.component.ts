@@ -1,10 +1,11 @@
 import { NgForOf, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import {
   TuiAutoColorPipe,
   TuiButton,
+  tuiDialog,
   TuiDropdown,
   TuiIcon,
   TuiInitialsPipe,
@@ -22,10 +23,12 @@ import {
   TuiStatus,
 } from '@taiga-ui/kit';
 import { TuiCell } from '@taiga-ui/layout';
+import { MenuComponentAddDialogComponent } from '../menu-component-add-dialog/menu-component-add-dialog.component';
+import { MenuComponent } from '../../../models/menu.model';
 
 @Component({
   standalone: true,
-  exportAs: 'Example2',
+  selector: 'app-menu-component-table',
   imports: [
     FormsModule,
     NgForOf,
@@ -53,7 +56,21 @@ import { TuiCell } from '@taiga-ui/layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponentTableComponent {
+  @Input() menuComponents: MenuComponent[] = [];
+  @Input() columns: { id: string; label: string }[] = [];
   protected readonly sizes = ['l', 'm', 's'] as const;
+  private readonly addDialog = tuiDialog(MenuComponentAddDialogComponent, {
+    dismissible: true,
+    closeable: true,
+  });
+
+  protected toggleAddDialog(): void {
+    this.addDialog(undefined).subscribe({
+      next: () => {
+        // Do something
+      },
+    });
+  }
 
   protected size = this.sizes[0];
 

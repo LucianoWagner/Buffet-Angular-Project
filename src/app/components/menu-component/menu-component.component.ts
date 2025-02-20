@@ -17,12 +17,9 @@ import {
   TuiStatus,
 } from '@taiga-ui/kit';
 import { TuiCell } from '@taiga-ui/layout';
-
-interface MenuComponent {
-  id: number;
-  nombre: string;
-  tipo: string;
-}
+import { MenuComponentService } from '../../core/menu/menu-component.service';
+import { MenuComponent } from '../../models/menu.model';
+import { MenuComponentTableComponent } from './menu-component-table/menu-component-table.component';
 
 @Component({
   selector: 'app-menu-components',
@@ -41,30 +38,27 @@ interface MenuComponent {
     TuiStatus,
     TuiTable,
     TuiTitle,
+    MenuComponentTableComponent,
   ],
-  templateUrl: './menu-items.component.html',
-  styleUrls: ['./menu-items.component.less'],
+  templateUrl: './menu-component.component.html',
+  styleUrls: ['./menu-component.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponentsComponent implements OnInit {
-  protected readonly sizes = ['l', 'm', 's'] as const;
-  protected size = this.sizes[0];
-  protected data: MenuComponent[] = [];
+  menuComponents: MenuComponent[] = [];
+  columns = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private menuComponentService: MenuComponentService) {}
 
   ngOnInit(): void {
     this.fetchMenuComponents();
   }
 
   private fetchMenuComponents(): void {
-    this.http.get<MenuComponent[]>('/menu-components').subscribe(
-      (response) => {
-        this.data = response;
+    this.menuComponentService.getAllMenuComponents().subscribe({
+      next: (menuComponents) => {
+        this.menuComponents = menuComponents;
       },
-      (error) => {
-        console.error('Error fetching menu components', error);
-      }
-    );
+    });
   }
 }

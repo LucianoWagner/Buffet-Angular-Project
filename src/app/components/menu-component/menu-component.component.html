@@ -1,32 +1,4 @@
-<div [style.margin-bottom.rem]="2">
-  <tui-radio-list
-    [itemContent]="content"
-    [items]="sizes"
-    [style.flex-direction]="'row'"
-    [style.width]="'max-content'"
-    [(ngModel)]="size"
-  />
-  <ng-template #content let-value>
-    {{ value === 's' ? 'Small' : value === 'm' ? 'Medium' : 'Large' }}
-  </ng-template>
-</div>
-
-<table tuiTable [size]="size" [style.width.rem]="58">
-  <thead>
-  <tr>
-    <th tuiTh>Nombre</th>
-    <th tuiTh>Tipo</th>
-  </tr>
-  </thead>
-  <tbody tuiTbody>
-  <tr *ngFor="let item of data">
-    <td tuiTd>
-      <span tuiTitle>{{ item.nombre }}</span>
-    </td>
-    <td tuiTd>
-      <span tuiStatus>{{ item.tipo }}</span>
-    </td>
-  </tr>
-  </tbody>
-</table>
-
+<app-menu-component-table
+  [menuComponents]="menuComponents"
+  [columns]="columns"
+></app-menu-component-table>
