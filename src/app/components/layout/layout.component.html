@@ -54,25 +54,7 @@
         </a>
       </div>
       <div class="flex items-center lg:order-2">
-        <button
-          tuiButton
-          size="s"
-          tuiIconButton
-          appearance="outline"
-          [style.border-radius.%]="100"
-          iconStart="@tui.shopping-cart"
-          [tuiDropdown]="dropdownContext"
-          [tuiDropdownManual]="open"
-          [tuiObscuredEnabled]="open"
-          (click)="onClick()"
-          (tuiActiveZoneChange)="onActiveZone($event)"
-          (tuiObscured)="onObscured($event)"
-        >
-          <ng-template #dropdownContext>
-            <div class="dropdown">No tienes nada en el carrito</div>
-          </ng-template>
-        </button>
-
+        <app-cart-dropdown></app-cart-dropdown>
         <button
           type="button"
           data-drawer-toggle="drawer-navigation"

@@ -7,6 +7,8 @@ import { NgClass, NgForOf } from '@angular/common';
 import { navBarItems } from '../../utils/consts';
 import { TuiButton, TuiDropdown, TuiIcon } from '@taiga-ui/core';
 import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
+import { TuiBadge } from '@taiga-ui/kit';
+import { CartDropdownComponent } from './cart-dropdown/cart-dropdown.component';
 
 @Component({
   selector: 'app-layout',
@@ -21,6 +23,8 @@ import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
     TuiDropdown,
     TuiObscured,
     TuiActiveZone,
+    TuiBadge,
+    CartDropdownComponent,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
@@ -31,22 +35,6 @@ export class LayoutComponent implements OnInit {
     protected authService: AuthService,
     private router: Router,
   ) {}
-
-  protected open = false;
-
-  protected onClick(): void {
-    this.open = !this.open;
-  }
-
-  protected onObscured(obscured: boolean): void {
-    if (obscured) {
-      this.open = false;
-    }
-  }
-
-  protected onActiveZone(active: boolean): void {
-    this.open = active && this.open;
-  }
 
   isActive(href: string) {
     return this.router.url === href;

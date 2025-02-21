@@ -1,0 +1,89 @@
+<div class="relative inline-block">
+  <button
+    tuiButton
+    size="s"
+    tuiIconButton
+    appearance="outline"
+    [style.border-radius.%]="100"
+    iconStart="@tui.shopping-cart"
+    [tuiDropdown]="dropdownContext"
+    [tuiDropdownManual]="open"
+    [tuiObscuredEnabled]="open"
+    (click)="onClick()"
+    (tuiActiveZoneChange)="onActiveZone($event)"
+    (tuiObscured)="onObscured($event)"
+  >
+    <ng-template #dropdownContext>
+      <div tuiCardLarge tuiAppearance="floating">
+        <h2 tuiTitle>
+          <b>Carrito</b>
+          <div
+            tuiSubtitle
+            *ngIf="getCartTotal() === 0"
+            [style.color]="'var(--tui-text-secondary)'"
+          >
+            No tienes elementos en el carrito
+          </div>
+        </h2>
+
+        <div *ngFor="let item of getCartItems()" tuiCell="l">
+          <tui-avatar appearance="primary" src="@tui.square-menu" />
+          <div tuiTitle class="capitalize">
+            {{ item.item.name }}
+            <div tuiSubtitle>
+              {{ item.item.date }}
+            </div>
+          </div>
+          <div>
+            <div tuiTitle>
+              {{ "$" + item.item.price * item.quantity }}
+              <div tuiSubtitle>
+                <div class="flex flex-row" tuiGroup [collapsed]="true">
+                  <button
+                    tuiIconButton
+                    size="xs"
+                    iconStart="@tui.minus"
+                    [style.border-radius.%]="100"
+                    (click)="removeFromCart(item.item)"
+                    type="button"
+                    appearance="flat"
+                  ></button>
+
+                  <button
+                    size="xs"
+                    tuiButton
+                    appearance="flat"
+                    [style.border-radius.%]="100"
+                  >
+                    {{ item.quantity }}
+                  </button>
+
+                  <button
+                    tuiIconButton
+                    size="xs"
+                    iconStart="@tui.plus"
+                    (click)="addToCart(item.item)"
+                    [style.border-radius.%]="100"
+                    appearance="flat"
+                    type="button"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          <button tuiButton type="button" class="w-full" appearance="outline">
+            <span tuiFade>Comprar</span>
+            <strong>${{ getCartTotalPrice() }}</strong>
+          </button>
+        </p>
+      </div>
+    </ng-template>
+  </button>
+
+  <tui-badge size="s" class="absolute -top-2 -left-3" appearance="primary">
+    {{ getCartTotal() }}
+  </tui-badge>
+</div>
