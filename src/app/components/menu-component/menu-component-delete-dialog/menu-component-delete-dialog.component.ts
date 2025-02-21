@@ -4,7 +4,6 @@ import {MenuComponentService} from '../../../core/menu/menu-component.service';
 import {MenuComponent} from '../../../models/menu.model';
 import {TuiResponsiveDialogService} from '@taiga-ui/addon-mobile';
 import {injectContext} from '@taiga-ui/polymorpheus';
-
 @Component({
   selector: 'app-menu-component-delete-dialog',
   imports: [TuiButton, TuiNotification, TuiTitle],
@@ -44,14 +43,31 @@ export class MenuComponentDeleteDialogComponent {
 
   confirmDelete(): void {
     console.log('Eliminando menú...:', this.context.data.id, this.context.data.name);
+
     this.menuComponentService.deleteMenuComponent(this.context.data.id!).subscribe({
       next: () => {
-        this.context.completeWith(this.menuComponent);  // Cierra el diálogo y pasa el menú eliminado
+        this.context.completeWith(this.menuComponent);
       },
       error: (error) => {
-        console.error('Error al eliminar el menú...:', error);
+        console.error('Error al eliminar el menú:', error);
+        this.showDeleteErrorAlert()
       }
     });
   }
+
+  private showDeleteErrorAlert(): void {
+    this.alerts
+      .open('No se puede eliminar el componente porque está asociado a un menú existente.', {
+        label: 'Error al eliminar',
+        appearance: 'negative',  // Usa 'negative' para errores
+        autoClose: 5000,         // Se cierra en 5 segundos
+      })
+      .subscribe();
+  }
+
+
+
+
+
 
 }
