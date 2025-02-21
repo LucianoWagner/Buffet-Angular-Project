@@ -70,14 +70,25 @@
               class="border-b dark:border-gray-700"
               *ngFor="let menuComponent of paginatedMenuComponents"
             >
-              <td class="px-4 py-3">{{ menuComponent.name }}</td>
-              <td class="px-4 py-3">{{ getMenuTypeLabel(menuComponent.type) }}</td>
+              <td class="px-4 py-3">
+                <tui-avatar
+                  size="m"
+                  class="mr-1"
+                  [src]="getImageUrl(menuComponent.imageUrl) ?? '@tui.pizza'"
+                ></tui-avatar>
+                <span class="font-semibold"> {{ menuComponent.name }}</span>
+              </td>
+              <td class="px-4 py-3">
+                {{ getMenuTypeLabel(menuComponent.type) }}
+              </td>
               <td class="px-4 py-3">
                 <app-actions-dropdown
                   [toggleEditDialog]="
                     toggleEditDialog.bind(this, menuComponent)
                   "
-                  [toggleDeleteDialog]="toggleDeleteDialog.bind(this,menuComponent)"
+                  [toggleDeleteDialog]="
+                    toggleDeleteDialog.bind(this, menuComponent)
+                  "
                 ></app-actions-dropdown>
               </td>
             </tr>

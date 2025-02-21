@@ -5,6 +5,7 @@ import { MenuDisplayComponent } from './menu-display/menu-display.component';
 
 import { NgIf } from '@angular/common';
 import { Menu } from '../../models/menu.model';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -60,7 +61,10 @@ export class MenuComponent implements OnInit {
     },
   ];
 
-  constructor(private menuService: MenuService) {}
+  constructor(
+    private menuService: MenuService,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
     this.fetchMenus();
@@ -78,5 +82,9 @@ export class MenuComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  isAdministrator(): boolean {
+    return this.authService.hasPermission('MENU_CREATE');
   }
 }

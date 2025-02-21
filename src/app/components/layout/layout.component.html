@@ -55,6 +55,25 @@
       </div>
       <div class="flex items-center lg:order-2">
         <button
+          tuiButton
+          size="s"
+          tuiIconButton
+          appearance="outline"
+          [style.border-radius.%]="100"
+          iconStart="@tui.shopping-cart"
+          [tuiDropdown]="dropdownContext"
+          [tuiDropdownManual]="open"
+          [tuiObscuredEnabled]="open"
+          (click)="onClick()"
+          (tuiActiveZoneChange)="onActiveZone($event)"
+          (tuiObscured)="onObscured($event)"
+        >
+          <ng-template #dropdownContext>
+            <div class="dropdown">No tienes nada en el carrito</div>
+          </ng-template>
+        </button>
+
+        <button
           type="button"
           data-drawer-toggle="drawer-navigation"
           aria-controls="drawer-navigation"
@@ -133,7 +152,7 @@
   >
     <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
       <ul class="space-y-2">
-        <li *ngFor="let option of navBarOptions">
+        <li *ngFor="let option of navBarItems[authService.getRole()]">
           <a
             href="{{ option.href }}"
             [ngClass]="{
@@ -144,13 +163,13 @@
             }"
             class="flex items-center p-2 text-base font-medium rounded-lg transition duration-300"
           >
-            <img
-              src="{{ option.icon }}"
+            <tui-icon
+              [icon]="option.icon"
               class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
               alt="icon"
             />
 
-            <span class="ml-3">{{ option.name }}</span>
+            <span class="ml-3">{{ option.label }}</span>
           </a>
         </li>
       </ul>

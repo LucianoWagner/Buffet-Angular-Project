@@ -1,5 +1,6 @@
 import { Menu, MenuComponent } from '../models/menu.model';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { enviorment } from '../../enviorments/enviorments';
 
 export function findComponent(componentsList: MenuComponent[], type: string) {
   return componentsList.find((component) => component.type === type);
@@ -31,4 +32,13 @@ export function passwordComplexityValidator(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
   return complexPasswordPattern.test(password) ? null : { complexity: true };
+}
+
+export function getImageUrl(
+  filename: string | null | undefined,
+): string | null {
+  if (filename) {
+    return `${enviorment.imagesUrl}/${filename}`;
+  }
+  return null;
 }

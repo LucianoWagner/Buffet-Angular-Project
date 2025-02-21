@@ -1,3 +1,13 @@
-<!-- <app-menu-table  [columns]="columns" [menus]="menus" (refreshMenus)="fetchMenus()"  ></app-menu-table> -->
-<!-- Componente de tabla de menú con columnas y menús, y un evento para refrescar los menús -->
-<app-menu-display [columns]="columns" [menus]="menus" (refreshMenus)="fetchMenus()"></app-menu-display>
+<!-- Show app-menu-table if isAdministrator() returns true -->
+<ng-container *ngIf="isAdministrator(); else menuDisplay">
+  <app-menu-table
+    [columns]="columns"
+    [menus]="menus"
+    (refreshMenus)="fetchMenus()"
+  ></app-menu-table>
+</ng-container>
+
+<!-- Fallback to app-menu-display if isAdministrator() returns false -->
+<ng-template #menuDisplay>
+  <app-menu-display></app-menu-display>
+</ng-template>

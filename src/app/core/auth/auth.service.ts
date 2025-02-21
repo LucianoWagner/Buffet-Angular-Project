@@ -130,6 +130,19 @@ export class AuthService {
     return decodedToken.permissions || [];
   }
 
+  getRole(): string {
+    const accessToken = this.getAccessToken();
+    if (!accessToken) {
+      return '';
+    }
+    const decodedToken = jwtDecode<JwtPayload>(accessToken);
+    return decodedToken.role || '';
+  }
+
+  hasPermission(permission: string): boolean {
+    return this.getPermissions().includes(permission);
+  }
+
   getUsername(): string {
     const accessToken = this.getAccessToken();
     if (!accessToken) {

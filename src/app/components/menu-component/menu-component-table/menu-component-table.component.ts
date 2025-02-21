@@ -39,10 +39,9 @@ import { MenuDeleteDialogComponent } from '../../menu/menu-table/menu-delete-dia
 import { MenuAddDialogComponent } from '../../menu/menu-table/menu-add-dialog/menu-add-dialog.component';
 import { MenuComponentEditDialogComponent } from '../menu-component-edit-dialog/menu-component-edit-dialog.component';
 import { ActionsDropdownComponent } from '../../menu/menu-table/actions-dropdown/actions-dropdown.component';
-import {
-  MenuComponentDeleteDialogComponent
-} from '../menu-component-delete-dialog/menu-component-delete-dialog.component';
-import {menuTypes} from '../../../utils/consts';
+import { MenuComponentDeleteDialogComponent } from '../menu-component-delete-dialog/menu-component-delete-dialog.component';
+import { menuTypes } from '../../../utils/consts';
+import { getImageUrl } from '../../../utils/utils';
 
 @Component({
   standalone: true,
@@ -121,10 +120,13 @@ export class MenuComponentTableComponent {
     closeable: true,
   });
 
-  private readonly  deleteDialog = tuiDialog(MenuComponentDeleteDialogComponent, {
-    dismissible: true,
-    closeable: true,
-  })
+  private readonly deleteDialog = tuiDialog(
+    MenuComponentDeleteDialogComponent,
+    {
+      dismissible: true,
+      closeable: true,
+    },
+  );
 
   protected toggleDeleteDialog(menuComponent: MenuComponent): void {
     this.deleteDialog(menuComponent).subscribe({
@@ -157,9 +159,10 @@ export class MenuComponentTableComponent {
   }
 
   getMenuTypeLabel(value: string): string {
-    const menuType = menuTypes.find(type => type.value === value);
+    const menuType = menuTypes.find((type) => type.value === value);
     return menuType ? menuType.label : value;
   }
 
   protected readonly Math = Math;
+  protected readonly getImageUrl = getImageUrl;
 }

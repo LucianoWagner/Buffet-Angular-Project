@@ -24,6 +24,15 @@ export class MenuService {
     );
   }
 
+  getByDate(date: string): Observable<Menu[]> {
+    return this.http.get<Menu[]>(`${this.apiUrl}?date=${date}`).pipe(
+      catchError((error) => {
+        console.error('Error al obtener los menús:', error);
+        return throwError(() => new Error('No se pudieron obtener los menús'));
+      }),
+    );
+  }
+
   /**
    * Crea un nuevo menú (requiere permiso `MENU_CREATE`).
    */

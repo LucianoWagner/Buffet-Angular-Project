@@ -205,7 +205,7 @@ export class MenuEditDialogComponent implements OnInit {
       drink,
       vegetarian,
     } = this.form.value;
-    const formattedDate = `${date!.year}-${String(date!.month - 1).padStart(2, '0')}-${String(date!.day).padStart(2, '0')}`;
+    const formattedDate = `${date!.year}-${String(date!.month + 1).padStart(2, '0')}-${String(date!.day).padStart(2, '0')}`;
 
     const menu: MenuUpdate = {
       name: name!,
