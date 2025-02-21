@@ -1,0 +1,45 @@
+<div tuiAppearance="floating" tuiCardLarge class="item">
+  <header tuiHeader>
+    <h1 tuiTitle>
+      {{ menu?.name }}
+      <span tuiSubtitle>{{ "$" + menu?.price }}</span>
+    </h1>
+    <aside tuiAccessories *ngIf="menu?.vegetarian">
+      <tui-avatar src="@tui.leaf" appearance="positive"></tui-avatar>
+    </aside>
+  </header>
+
+  <div *ngFor="let type of menuTypes" tuiCell="l">
+    <tui-avatar
+      appearance="primary"
+      [style.background]="
+        findComponent(menu!.components, type.value) === undefined
+          ? '#e29398'
+          : ''
+      "
+      [src]="
+        findComponent(menu!.components, type.value) === undefined
+          ? '@tui.circle-minus'
+          : (getImageSrc(
+              findComponent(menu!.components, type.value)?.imageUrl
+            ) ?? type.icon)
+      "
+    />
+    <div tuiTitle>
+      {{ findComponent(menu!.components, type.value)?.name ?? "No incluido" }}
+      <div tuiSubtitle>{{ type.label }}</div>
+    </div>
+  </div>
+
+  <footer class="items-end justify-between">
+    <button
+      tuiButton
+      type="button"
+      class="button"
+      appearance="secondary"
+      iconEnd="@tui.shopping-cart"
+    >
+      Agregar al carrito
+    </button>
+  </footer>
+</div>

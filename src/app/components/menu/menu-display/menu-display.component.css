@@ -1,4 +1,4 @@
-@import '@taiga-ui/core/styles/taiga-ui-local.less';
+@import "@taiga-ui/core/styles/taiga-ui-local.less";
 
 .container {
   max-inline-size: 46.875rem;
@@ -51,11 +51,11 @@
 }
 
 .operation-status {
-  &_success {
+  & _success {
     color: var(--tui-text-positive);
   }
 
-  &_error {
+  & _error {
     color: var(--tui-text-negative);
   }
 }
@@ -72,4 +72,14 @@
 
 .buttons {
   display: flex;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.carousel {
+  inline-size: 20rem;
+  flex-shrink: 0;
 }

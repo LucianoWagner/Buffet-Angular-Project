@@ -1,55 +1,117 @@
-<tui-accordion>
-  <tui-accordion-item *ngFor="let menuGroup of filteredMenus">
-    <ng-template tuiAccordionItemTitle>
-      <!-- Título de la fecha de los menús -->
-      <div class="flex justify-between items-center">
-        <span>{{ menuGroup.date }}</span>
-      </div>
-    </ng-template>
+<!--<tui-accordion>-->
+<!--  <tui-accordion-item *ngFor="let menuGroup of filteredMenus">-->
+<!--    &lt;!&ndash;    <ng-template >&ndash;&gt;-->
+<!--    &lt;!&ndash;      &lt;!&ndash; Título de la fecha de los menús &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;      <div class="flex justify-between items-center">&ndash;&gt;-->
+<!--    &lt;!&ndash;        <span>{{ menuGroup.date }}</span>&ndash;&gt;-->
+<!--    &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--    &lt;!&ndash;    </ng-template>&ndash;&gt;-->
 
-    <ng-template tuiAccordionItemContent>
-      <table class="min-w-full table-auto">
-        <thead>
-        <tr>
-          <th class="px-4 py-3">Nombre</th>
-          <th class="px-4 py-3">Precio</th>
-          <th class="px-4 py-3">Stock</th>
-          <th class="px-4 py-3">Vegetariano</th>
-          <th class="px-4 py-3">Entrada</th>
-          <th class="px-4 py-3">Plato Principal</th>
-          <th class="px-4 py-3">Postre</th>
-          <th class="px-4 py-3">Bebida</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let menu of menuGroup.menus">
-          <td class="px-4 py-3">{{ menu.name }}</td>
-          <td class="px-4 py-3">{{ menu.price | currency }}</td> <!-- Formato de moneda -->
-          <td class="px-4 py-3">{{ menu.stock }}</td>
-          <td class="px-4 py-3">
-            <input
-              disabled
-              id="checkbox-{{ menu.id }}"
-              [checked]="menu.vegetarian"
-              type="checkbox"
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          </td>
-          <td class="px-4 py-3">
-            {{ findComponent(menu.components, 'STARTER')?.name || 'No disponible' }}
-          </td>
-          <td class="px-4 py-3">
-            {{ findComponent(menu.components, 'MAIN_DISH')?.name || 'No disponible' }}
-          </td>
-          <td class="px-4 py-3">
-            {{ findComponent(menu.components, 'DESSERT')?.name || 'No disponible' }}
-          </td>
-          <td class="px-4 py-3">
-            {{ findComponent(menu.components, 'DRINK')?.name || 'No disponible' }}
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </ng-template>
-  </tui-accordion-item>
-</tui-accordion>
+<!--    <ng-template tuiAccordionItemContent>-->
+<!--      <table class="min-w-full table-auto">-->
+<!--        <thead>-->
+<!--          <tr>-->
+<!--            <th class="px-4 py-3">Nombre</th>-->
+<!--            <th class="px-4 py-3">Precio</th>-->
+<!--            <th class="px-4 py-3">Stock</th>-->
+<!--            <th class="px-4 py-3">Vegetariano</th>-->
+<!--            <th class="px-4 py-3">Entrada</th>-->
+<!--            <th class="px-4 py-3">Plato Principal</th>-->
+<!--            <th class="px-4 py-3">Postre</th>-->
+<!--            <th class="px-4 py-3">Bebida</th>-->
+<!--          </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--          <tr *ngFor="let menu of menuGroup.menus">-->
+<!--            <td class="px-4 py-3">{{ menu.name }}</td>-->
+<!--            <td class="px-4 py-3">{{ menu.price | currency }}</td>-->
+<!--            &lt;!&ndash; Formato de moneda &ndash;&gt;-->
+<!--            <td class="px-4 py-3">{{ menu.stock }}</td>-->
+<!--            <td class="px-4 py-3">-->
+<!--              <input-->
+<!--                disabled-->
+<!--                id="checkbox-{{ menu.id }}"-->
+<!--                [checked]="menu.vegetarian"-->
+<!--                type="checkbox"-->
+<!--                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"-->
+<!--              />-->
+<!--            </td>-->
+<!--            <td class="px-4 py-3">-->
+<!--              {{-->
+<!--                findComponent(menu.components, "STARTER")?.name ||-->
+<!--                  "No disponible"-->
+<!--              }}-->
+<!--            </td>-->
+<!--            <td class="px-4 py-3">-->
+<!--              {{-->
+<!--                findComponent(menu.components, "MAIN_DISH")?.name ||-->
+<!--                  "No disponible"-->
+<!--              }}-->
+<!--            </td>-->
+<!--            <td class="px-4 py-3">-->
+<!--              {{-->
+<!--                findComponent(menu.components, "DESSERT")?.name ||-->
+<!--                  "No disponible"-->
+<!--              }}-->
+<!--            </td>-->
+<!--            <td class="px-4 py-3">-->
+<!--              {{-->
+<!--                findComponent(menu.components, "DRINK")?.name || "No disponible"-->
+<!--              }}-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--    </ng-template>-->
+<!--  </tui-accordion-item>-->
+<!--</tui-accordion>-->
+
+<div class="grid grid-cols-1 md:grid-cols-3">
+  <div class="col-span-1 flex flex-col">
+    <header tuiHeader>
+      <h1 tuiTitle>Realiza tu pedido</h1>
+    </header>
+    <tui-calendar
+      [value]="selectedDate()"
+      [min]="TuiDay.currentLocal()"
+      (dayClick)="onDayClick($event)"
+      [max]="TuiDay.currentLocal().append({ day: 10 })"
+      class="mt-6"
+    ></tui-calendar>
+  </div>
+  <div
+    tuiCarouselButtons
+    class="wrapper col-span-1 md:col-span-2 mx-auto"
+    *ngIf="filteredMenus.length > 0"
+  >
+    <button
+      iconStart="@tui.chevron-left"
+      tuiIconButton
+      type="button"
+      (click)="carousel.prev()"
+    >
+      Previous
+    </button>
+    <tui-carousel #carousel class="carousel">
+      <ng-container *ngFor="let menu of filteredMenus">
+        <app-menu-display-card *tuiItem [menu]="menu"></app-menu-display-card>
+      </ng-container>
+    </tui-carousel>
+    <button
+      iconStart="@tui.chevron-right"
+      tuiIconButton
+      type="button"
+      (click)="carousel.next()"
+    >
+      Next
+    </button>
+  </div>
+  <div
+    *ngIf="filteredMenus.length === 0"
+    class="col-span-1 m-auto md:col-span-2"
+  >
+    <tui-notification appearance="neutral" size="l" iconStart="@tui.x">
+      No hay menus disponibles para la fecha seleccionada
+    </tui-notification>
+  </div>
+</div>
