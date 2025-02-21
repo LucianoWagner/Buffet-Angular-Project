@@ -1,2 +1,3 @@
-<app-menu-table  [columns]="columns" [menus]="menus" (refreshMenus)="fetchMenus()"  ></app-menu-table>
-
+<!-- <app-menu-table  [columns]="columns" [menus]="menus" (refreshMenus)="fetchMenus()"  ></app-menu-table> -->
+<!-- Componente de tabla de menú con columnas y menús, y un evento para refrescar los menús -->
+<app-menu-display [columns]="columns" [menus]="menus" (refreshMenus)="fetchMenus()"></app-menu-display>

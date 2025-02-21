@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MenuService } from '../../core/menu/menu.service';
 import { MenuTableComponent } from './menu-table/menu-table.component';
+import { MenuDisplayComponent } from './menu-display/menu-display.component';
 
 import { NgIf } from '@angular/common';
 import { Menu } from '../../models/menu.model';
@@ -9,7 +10,7 @@ import { Menu } from '../../models/menu.model';
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
-  imports: [MenuTableComponent, NgIf],
+  imports: [MenuDisplayComponent, MenuTableComponent, NgIf],
   standalone: true,
 })
 export class MenuComponent implements OnInit {
