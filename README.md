@@ -1,63 +1,90 @@
-<<<<<<< HEAD
-# BuffetProject
+# ¿Qué Comemos? - Frontend (Angular) 🥗
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.5.
+Este proyecto es la interfaz de usuario para el sistema de administración del buffet de la Facultad de Informatica. Desarrollado con **Angular 17**, ofrece una experiencia moderna, reactiva y segura para administradores y usuarios.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🎥 Video Demostrativo
 
-```bash
-ng serve
-```
+¡Mira el sistema en acción! Haz clic en la imagen de abajo para ver la demostración completa en YouTube:
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+[![Ver Demo en YouTube](https://img.youtube.com/vi/euIryP2ETmY/maxresdefault.jpg)](https://www.youtube.com/watch?v=euIryP2ETmY)
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🚀 Tecnologías y Herramientas
 
-```bash
-ng generate component component-name
-```
+- **Angular 17.3.0** (Framework principal)
+- **Tailwind CSS** + **Flowbite** (Estilos y componentes UI)
+- **RxJS** (Programación reactiva)
+- **NGX-Charts** (Visualización de estadísticas)
+- **Angular Router** (Navegación SPA)
+- **Interceptors** (Manejo de tokens JWT y logs)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 📂 Estructura del Proyecto
 
-## Building
+El proyecto está organizado de forma modular para facilitar el mantenimiento y la escalabilidad:
 
-To build the project run:
+### Core & Layout
+- **Core**: Contiene servicios globales, interceptores de autenticación y guards de seguridad.
+- **Layout**: Definición de la estructura visual (Navbar, Sidebar, Footer).
 
-```bash
-ng build
-```
+### Módulos de Funcionalidad (`/modules`)
+- **Auth**: Pantallas de Login y Registro de usuarios.
+- **Home**: Dashboard principal y bienvenida.
+- **Menu**: Visualización de la carta de comidas y detalles de menús.
+- **Purchase**: Proceso de compra, selección de ítems y gestión de tickets.
+- **Suggestion**: Interfaz para enviar y visualizar sugerencias.
+- **Profile**: Gestión de datos personales y preferencias del usuario.
+- **Admin**: Panel exclusivo para administradores (gestión de usuarios, menús y estadísticas).
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🔐 Seguridad y Autenticación
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **Guards**: El acceso a las rutas está protegido según el rol del usuario (ADMIN, USUARIO, etc.).
+- **Interceptors**: 
+  - `AuthInterceptor`: Adjunta automáticamente el token JWT en cada petición al backend.
+  - `LoggingInterceptor`: Facilita la depuración mediante el logueo de peticiones y respuestas.
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+## 📊 Visualización de Datos
+Para el cumplimiento del **Punto F (Estadísticas)** del enunciado, se utiliza **NGX-Charts**, permitiendo visualizar de forma gráfica:
+- Cantidad de menús vendidos (diario/semanal/mensual).
+- Recaudación monetaria en tiempo real.
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## 🛠️ Configuración e Instalación
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone https://github.com/LucianoWagner/Buffet-Angular-Project.git
+    ```
+2.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
+3.  **Configurar el Backend:**
+    Asegúrate de que la URL de la API en `src/environments/environment.ts` sea la correcta:
+    ```typescript
+    export const environment = {
+      production: false,
+      apiUrl: 'http://localhost:8080/api/v1'
+    };
+    ```
+4.  **Correr el proyecto:**
+    ```bash
+    npm start
+    # O también:
+    ng serve
+    ```
+    Navegar a `http://localhost:4200`.
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-=======
-# Buffet-Angular-Project
->>>>>>> 9584ae70dc5cefce79e393ad06c096dd54e89bb3
+## 📄 Proyecto Académico
+Este frontend forma parte del Trabajo Final para la materia **Taller de Tecnologías de Producción de Software (TTPS)** - Opción Java.
